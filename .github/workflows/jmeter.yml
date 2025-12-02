@@ -1,0 +1,85 @@
+name: Run JMeter Vault Tests
+
+on:
+  push:
+    branches: [ main, PersonalVault ]
+    paths:
+      - 'Vaults/**.jmx'
+      - 'data/**'
+  workflow_dispatch:
+
+jobs:
+  run-vault-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        vault: [ 'DigitalVault', 'EOLVault', 'HealthVault', 'LegalVault', 'PersonalVault', 'Subscription' ]
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java (JMeter needs Java)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install wget and tar
+        run: sudo apt-get update && sudo apt-get install -y wget tar
+
+      - name: Download & extract JMeter
+        run: |
+          JMETER_VER="5.6.3"
+          wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
+          tar xzf apache-jmeter-${JMETER_VER}.tgz
+
+      - name: Prepare results folder
+        run: mkdir -p results
+
+      - name: Find latest JMX in the vault
+        id: find_jmx
+        run: |
+          VAULT_DIR="Vaults/${{ matrix.vault }}"
+          LATEST=$(ls -1t "${VAULT_DIR}"/*.jmx 2>/dev/null | head -n1 || true)
+          if [ -n "$LATEST" ]; then
+            echo "found=$LATEST" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show chosen JMX
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: echo "Running ${{ steps.find_jmx.outputs.found }}"
+
+      - name: Run JMeter
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: |
+          set -e
+          JMETER_HOME="apache-jmeter-5.6.3"
+          JMX="${{ steps.find_jmx.outputs.found }}"
+          RUN_ID="${{ matrix.vault }}-$(date +%Y%m%d-%H%M%S)"
+          RUN_DIR="results/${RUN_ID}"
+          mkdir -p "${RUN_DIR}"
+          cp -r data "${RUN_DIR}/data"
+          cp "${JMX}" "${RUN_DIR}/testplan.jmx"
+          "${JMETER_HOME}/bin/jmeter" -n \
+            -t "${RUN_DIR}/testplan.jmx" \
+            -l "${RUN_DIR}/results.jtl" \
+            -j "${RUN_DIR}/jmeter.log" \
+            -e -o "${RUN_DIR}/html"
+
+      - name: Upload report
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-report-${{ matrix.vault }}
+          path: results/${{ matrix.vault }}-*/
+
+      - name: No JMX found
+        if: ${{ steps.find_jmx.outputs.found == '' }}
+        run: echo "Skipping vault ${{ matrix.vault }} (No JMX found)"
