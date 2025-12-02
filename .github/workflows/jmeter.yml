@@ -29,8 +29,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install wget and tar
-        run: sudo apt-get update && sudo apt-get install -y wget tar
+      - name: Install required tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget tar xmlstarlet
 
       - name: Download & extract JMeter
         run: |
@@ -56,6 +58,9 @@ jobs:
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: echo "Running ${{ steps.find_jmx.outputs.found }}"
 
+      # ---------------------------------------------------------
+      # 🚀 FULLY UPGRADED RUN JMETER WITH NORMALIZATION + VALIDATION
+      # ---------------------------------------------------------
       - name: Run JMeter
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: |
@@ -64,14 +69,58 @@ jobs:
           JMX="${{ steps.find_jmx.outputs.found }}"
           RUN_ID="${{ matrix.vault }}-$(date +%Y%m%d-%H%M%S)"
           RUN_DIR="results/${RUN_ID}"
+
           mkdir -p "${RUN_DIR}"
           cp -r data "${RUN_DIR}/data"
+
+          echo "Copied JMX:"
           cp "${JMX}" "${RUN_DIR}/testplan.jmx"
+
+          echo "Normalizing JMX paths..."
+
+          # Convert Windows backslashes -> /
+          sed -i 's#\\\\#/#g' "${RUN_DIR}/testplan.jmx"
+
+          # Remove drive letters like C:/ or D:/
+          sed -i 's#[A-Za-z]:/##g' "${RUN_DIR}/testplan.jmx"
+
+          # XML-safe normalization of CSV filename references
+          for f in data/*; do
+            name=$(basename "$f")
+            xmlstarlet ed -L \
+              -u "//stringProp[@name='filename' and contains(text(), '${name}')]" \
+              -v "data/${name}" \
+              "${RUN_DIR}/testplan.jmx" || true
+          done
+
+          echo "After XML normalization (filenames found):"
+          xmlstarlet sel -t -m "//stringProp[@name='filename']" -v . -n "${RUN_DIR}/testplan.jmx" || true
+
+          echo "Validating referenced CSV files exist..."
+
+          # Validate that referenced CSVs exist before running JMeter
+          ERR=0
+          grep -oP '(?<=<stringProp name="filename">)[^<]+' "${RUN_DIR}/testplan.jmx" | while read file; do
+            if [ ! -f "${RUN_DIR}/${file}" ]; then
+              echo "❌ ERROR: Missing CSV referenced in JMX: ${file}"
+              ERR=1
+            fi
+          done
+
+          if [ "$ERR" = "1" ]; then
+            echo "Stopping because CSV references are incorrect."
+            exit 1
+          fi
+
+          echo "CSV validation passed. Running JMeter."
+
           "${JMETER_HOME}/bin/jmeter" -n \
             -t "${RUN_DIR}/testplan.jmx" \
             -l "${RUN_DIR}/results.jtl" \
             -j "${RUN_DIR}/jmeter.log" \
             -e -o "${RUN_DIR}/html"
+
+          echo "JMeter run completed."
 
       - name: Upload report
         if: ${{ steps.find_jmx.outputs.found != '' }}
