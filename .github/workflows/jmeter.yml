@@ -7,12 +7,21 @@ on:
       - 'Vaults/**.jmx'
       - 'data/**'
   workflow_dispatch:
+    inputs:
+      choose_vault:
+        description: 'Run a specific vault manually'
+        required: false
+        type: choice
+        options:
+          - DigitalVault
+          - EOLVault
+          - HealthVault
+          - LegalVault
+          - PersonalVault
+          - Subscription
 
 jobs:
 
-  # -----------------------------------------------------
-  # 1) DETECT WHICH VAULTS CHANGED
-  # -----------------------------------------------------
   detect-vaults:
     runs-on: ubuntu-latest
     outputs:
@@ -23,15 +32,19 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Detect changed vaults
+      - name: Detect vaults changed by push
         id: find
         run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "vaults=${{ github.event.inputs.choose_vault }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
+          CHANGED=$(git diff --name-only HEAD^ HEAD)
           echo "Changed files:"
           echo "$CHANGED"
 
-          VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u)
+          VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u || true)
 
           if [ -z "$VAULTS" ]; then
             echo "vaults=" >> $GITHUB_OUTPUT
@@ -40,12 +53,8 @@ jobs:
           fi
 
       - name: Show detected vaults
-        run: echo "Vaults affected: ${{ steps.find.outputs.vaults }}"
+        run: echo "Vaults selected: ${{ steps.find.outputs.vaults }}"
 
-
-  # -----------------------------------------------------
-  # 2) RUN JMETER ONLY FOR CHANGED VAULTS
-  # -----------------------------------------------------
   run-vault-tests:
     needs: detect-vaults
     if: needs.detect-vaults.outputs.vaults != ''
@@ -90,30 +99,25 @@ jobs:
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: echo "Running ${{ steps.find_jmx.outputs.found }}"
 
-      # ---------------------------------------------------------
-      # 🚀 FULL RUN: NORMALIZE + CHECK CSVs + EXECUTE + SAVE
-      # ---------------------------------------------------------
       - name: Run JMeter
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: |
           set -e
           JMETER_HOME="apache-jmeter-5.6.3"
-          VAULT="Vaults/${{ matrix.vault }}"
+          VAULT_DIR="Vaults/${{ matrix.vault }}"
           JMX="${{ steps.find_jmx.outputs.found }}"
-          RUN_ID=$(date +%Y%m%d-%H%M%S)
+          RUN_TIME=$(date +%Y%m%d-%H%M%S)
+          RUN_DIR="${VAULT_DIR}/Results/${RUN_TIME}"
 
-          RUN_DIR="${VAULT}/Results/${RUN_ID}"
           mkdir -p "${RUN_DIR}"
           cp -r data "${RUN_DIR}/data"
           cp "${JMX}" "${RUN_DIR}/testplan.jmx"
 
-          echo "Normalizing paths in testplan..."
-
-          # Replace Windows paths
+          echo "Normalizing Windows paths..."
           sed -i 's#\\\\#/#g' "${RUN_DIR}/testplan.jmx"
           sed -i 's#[A-Za-z]:/##g' "${RUN_DIR}/testplan.jmx"
 
-          # Normalize filename XML references
+          echo "Fixing CSV filename references..."
           for f in data/*; do
             name=$(basename "$f")
             xmlstarlet ed -L \
@@ -122,12 +126,8 @@ jobs:
               "${RUN_DIR}/testplan.jmx" || true
           done
 
-          echo "After normalizing CSV references:"
-          xmlstarlet sel -t -m "//stringProp[@name='filename']" -v . -n "${RUN_DIR}/testplan.jmx" || true
-
-          echo "Validating referenced CSV files..."
+          echo "Validating CSV references..."
           ERR=0
-
           grep -oP '(?<=<stringProp name="filename">)[^<]+' "${RUN_DIR}/testplan.jmx" | while read file; do
             if [ ! -f "${RUN_DIR}/${file}" ]; then
               echo "❌ Missing CSV: ${file}"
@@ -136,11 +136,11 @@ jobs:
           done
 
           if [ "$ERR" = "1" ]; then
-            echo "Stopping workflow, CSV missing."
+            echo "Stopping workflow. CSV missing."
             exit 1
           fi
 
-          echo "CSV validation OK. Running JMeter..."
+          echo "CSV OK. Running JMeter..."
 
           "$JMETER_HOME/bin/jmeter" -n \
             -t "${RUN_DIR}/testplan.jmx" \
@@ -148,29 +148,25 @@ jobs:
             -j "${RUN_DIR}/jmeter.log" \
             -e -o "${RUN_DIR}/html"
 
-          echo "JMeter execution completed."
+          echo "JMeter completed."
 
-      - name: Upload HTML report artifact
+      - name: Upload HTML report
         if: ${{ steps.find_jmx.outputs.found != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-report-${{ matrix.vault }}
           path: Vaults/${{ matrix.vault }}/Results/*
 
-      - name: Commit results back to repo
+      - name: Commit results back to repository
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
           git add Vaults/${{ matrix.vault }}/Results/*
-          git commit -m "Add JMeter results for ${{ matrix.vault }} on $(date)"
-          git push || true
+          git commit -m "Add JMeter results for ${{ matrix.vault }} at $(date)" || echo "Nothing to commit"
+          git push || echo "Push skipped (likely no changes)"
 
-
-  # -----------------------------------------------------
-  # 3) If no vaults changed, show message
-  # -----------------------------------------------------
   no-vaults:
     needs: detect-vaults
     if: needs.detect-vaults.outputs.vaults == ''
