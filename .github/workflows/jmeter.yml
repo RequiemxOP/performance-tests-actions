@@ -8,19 +8,6 @@ on:
     paths:
       - 'Vaults/**.jmx'
       - 'data/**'
-  workflow_dispatch:
-    inputs:
-      choose_vault:
-        description: 'Run a specific vault manually'
-        required: false
-        type: choice
-        options:
-          - DigitalVault
-          - EOLVault
-          - HealthVault
-          - LegalVault
-          - PersonalVault
-          - Subscription
 
 jobs:
 
@@ -47,12 +34,6 @@ jobs:
           echo "::endgroup::"
           VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u | xargs || true)
           echo "vaults found: $VAULTS"
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
-            CHOSEN="${{ github.event.inputs.choose_vault }}"
-            echo "Manual dispatch: $CHOSEN"
-            echo "vaults=$CHOSEN" >> $GITHUB_OUTPUT
-            exit 0
-          fi
           if [ -z "$VAULTS" ]; then
             echo "vaults=" >> $GITHUB_OUTPUT
           else
