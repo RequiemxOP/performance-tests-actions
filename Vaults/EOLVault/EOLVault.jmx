@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">100</intProp>
+        <intProp name="ThreadGroup.ramp_time">100</intProp>
+        <longProp name="ThreadGroup.duration">3600</longProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>40.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetEOLDashboardCount" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetEOLDashboardCount&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userID&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;vaultID&quot;:6}},&quot;query&quot;:&quot;query GetEOLDashboardCount($input: EOLDashboardInput!) {\n  getEOLDashboardCount(input: $input) {\n    submodules {\n      vaultId\n      vaultName\n      groups {\n        groupId\n        groupName\n        modules {\n          moduleId\n          moduleName\n          recordCount\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    message\n    code\n    success\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>20.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetCurateMyStory" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetCurateMyStory&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;searchText&quot;:&quot;&quot;}},&quot;query&quot;:&quot;query GetCurateMyStory($input: CurateMyStoryRequest!) {\n  getCurateMyStory(input: $input) {\n    errorMessage\n    success\n    message\n    code\n    curateMyStorydata {\n      id\n      subject\n      timePeriod\n      story\n      lastUpdated\n      manage\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetCurateMyStoryById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetCurateMyStoryById&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;id&quot;:599}},&quot;query&quot;:&quot;query GetCurateMyStoryById($input: CurateMyStoryByIdRequest!) {\n  getCurateMyStoryById(input: $input) {\n    message\n    success\n    code\n    error\n    data {\n      userId\n      id\n      chapter\n      startDate\n      endDate\n      story\n      files {\n        id\n        documentLink\n        originalFileName\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateCurateMyStory" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;Update&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;id&quot;:599,&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;chapter&quot;:&quot;Satyadev&quot;,&quot;startDate&quot;:&quot;2020-11-11&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;story&quot;:&quot;wejcicwcmeocmweiocmwkmskcmnenqeifmkqmcqiocmokwsmcqekocmakocmkomwekcomkoamkoamcokemcakocmkaemckoemckqeomweoifjeriotrighruvhevihofher\ntestinggggg&quot;,&quot;files&quot;:[]}},&quot;query&quot;:&quot;mutation Update($input: UpdateMyStoryInput!) {\n  updateCurateMyStory(input: $input) {\n    success\n    message\n    code\n    errorMessage\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="createCurateMyStory" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="operations" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;chapter&quot;:&quot;Satyadev&quot;,&quot;startDate&quot;:&quot;2020-11-11&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;story&quot;:&quot;wejcicwcmeocmweiocmwkmskcmnenqeifmkqmcqiocmokwsmcqekocmakocmkomwekcomkoamkoamcokemcakocmkaemckoemckqeomweoifjeriotrighruvhevihofher&quot;,&quot;files&quot;:[{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;API doc.docx&quot;}]}},&quot;query&quot;:&quot;mutation ($input: CurateMyStoryInput!) {\n  createCurateMyStory(input: $input) {\n    success\n    message\n    errorMessage\n    code\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">operations</stringProp>
+              </elementProp>
+              <elementProp name="map" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;1&quot;:[&quot;variables.input.files.0.file&quot;]}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">map</stringProp>
+              </elementProp>
+              <elementProp name="1" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> (binary)</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">1</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteCurateMyStory" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;DeleteCurateMyStory&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;id&quot;:599}},&quot;query&quot;:&quot;mutation DeleteCurateMyStory($input: DeleteCurateMyStoryInput!) {\n  deleteCurateMyStory(input: $input) {\n    code\n    success\n    message\n    errorMessage\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>20.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetMyFuneralPreferences" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetMyFuneralPreferences&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;searchText&quot;:&quot;&quot;}},&quot;query&quot;:&quot;query GetMyFuneralPreferences($input: GetMyFuneralPreferencesInput!) {\n  getMyFuneralPreferences(input: $input) {\n    errorMessage\n    success\n    message\n    code\n    funeralPreferencesData {\n      id\n      funeralServiceTypeId\n      funeralServiceType\n      provider\n      summaryNote\n      agreementDate\n      lastUpdated\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetMyFuneralPreferencesById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetMyFuneralPreferencesById&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;id&quot;:466}},&quot;query&quot;:&quot;query GetMyFuneralPreferencesById($input: GetMyFuneralPreferenceByIdInput!) {\n  getMyFuneralPreferencesById(input: $input) {\n    message\n    success\n    code\n    error\n    data {\n      userId\n      id\n      funeralServiceTypeId\n      currency\n      funeralServiceType\n      provider\n      providerPhone\n      providerAddress\n      summaryNote\n      enrolledWithAgency\n      agencyName\n      agencyAddress\n      agreementDate\n      agreementContactNumber\n      prepaid\n      amount\n      detailedNotes\n      files {\n        originalFileName\n        documentLink\n        updatedAt\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetFuneralServiceType" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetFuneralServiceType&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query GetFuneralServiceType {\n  getFuneralServiceType {\n    funeralServiceType {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateFuneralPreference" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;UpdateFuneralPreference&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;id&quot;:580,&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;funeralServiceTypeId&quot;:2,&quot;funeralServiceType&quot;:&quot;Cremation&quot;,&quot;provider&quot;:&quot;Vamsi&quot;,&quot;providerPhone&quot;:&quot;918088981503&quot;,&quot;providerAddress&quot;:&quot;Nellore&quot;,&quot;summaryNote&quot;:&quot;testinggg gggggggggggggg&quot;,&quot;enrolledWithAgency&quot;:true,&quot;agencyName&quot;:&quot;Last wish&quot;,&quot;agencyAddress&quot;:&quot;Nellore&quot;,&quot;agreementDate&quot;:&quot;2023-01-01&quot;,&quot;agreementContactNumber&quot;:&quot;919052354536&quot;,&quot;prepaid&quot;:true,&quot;amount&quot;:300,&quot;detailedNotes&quot;:&quot;testing api&quot;,&quot;currency&quot;:&quot;in&quot;,&quot;files&quot;:[]}},&quot;query&quot;:&quot;mutation UpdateFuneralPreference($input: UpdateMyFuneralPreferencesInput!) {\n  updateMyFuneralPreferences(input: $input) {\n    message\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CreateFuneralPreference" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="operations" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;CreateFuneralPreference&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;funeralServiceTypeId&quot;:&quot;2&quot;,&quot;funeralServiceType&quot;:&quot;Cremation&quot;,&quot;provider&quot;:&quot;Vamsi&quot;,&quot;providerPhone&quot;:&quot;918088981503&quot;,&quot;providerAddress&quot;:&quot;Nellore&quot;,&quot;summaryNote&quot;:&quot;testinggg&quot;,&quot;enrolledWithAgency&quot;:true,&quot;agencyName&quot;:&quot;Last wish&quot;,&quot;agencyAddress&quot;:&quot;Nellore&quot;,&quot;agreementDate&quot;:&quot;2023-01-01&quot;,&quot;agreementContactNumber&quot;:&quot;919052354536&quot;,&quot;prepaid&quot;:true,&quot;amount&quot;:300,&quot;detailedNotes&quot;:&quot;testing api&quot;,&quot;currency&quot;:&quot;in&quot;,&quot;files&quot;:[{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;Payslip_IB671_September_2025.pdf&quot;}]}},&quot;query&quot;:&quot;mutation CreateFuneralPreference($input: MyFuneralPreferencesInput!) {\n  createMyFuneralPreferences(input: $input) {\n    message\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">operations</stringProp>
+              </elementProp>
+              <elementProp name="map" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;1&quot;:[&quot;variables.input.files.0.file&quot;]}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">map</stringProp>
+              </elementProp>
+              <elementProp name="1" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> (binary)</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">1</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteFuneralPreference" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;DeleteFuneralPreference&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;id&quot;:580}},&quot;query&quot;:&quot;mutation DeleteFuneralPreference($input: DeleteMyFuneralPreferencesInput!) {\n  deleteMyFuneralPreferences(input: $input) {\n    message\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">false</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>20.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="printPdfEOL" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;printPdfEOL&quot;,&quot;variables&quot;:{&quot;request&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;vaultId&quot;:6,&quot;moduleIds&quot;:[41,42]}},&quot;query&quot;:&quot;query printPdfEOL($request: PrintPdfEOLRequest!) {\n  printPdfEOL(request: $request) {\n    message\n    success\n    code\n    error\n    vaultName\n    curateMyStory {\n      id\n      subject\n      timePeriod\n      story\n      lastUpdated\n      files {\n        filleId\n        documentLink\n        originalFileName\n        createdAT\n        __typename\n      }\n      __typename\n    }\n    funeralPreferences {\n      id\n      funeralServiceType\n      provider\n      summaryNote\n      agreementDate\n      lastUpdated\n      files {\n        id\n        documentLink\n        originalFileName\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login -${Login}" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;operationName&quot;: &quot;LoginUser&quot;,&#xd;
+    &quot;variables&quot;: {&#xd;
+        &quot;input&quot;: {&#xd;
+            &quot;email&quot;: &quot;${username}&quot;,&#xd;
+            &quot;password&quot;: &quot;${privatekey}&quot;&#xd;
+        }&#xd;
+    },&#xd;
+    &quot;query&quot;: &quot;mutation LoginUser($input: LoginInput!) {\n  login(input: $input) {\n    message\n    success\n    code\n    data {\n      userId\n      userName\n      accessToken\n      preferredName\n      __typename\n    }\n    __typename\n  }\n}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Authentication</stringProp>
+            <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IiIsInJvbGUiOiIiLCJ1c2VySWQiOiJlYWNhNTZmYy0wNjlhLTRmODMtYmJjNy01MDFlZjY3NGNmNmUiLCJpc01lZGljYWwiOmZhbHNlLCJleHAiOjE3NjUwMDIyMjEsIm5iZiI6MTc2NDkxNTgyMSwiaWF0IjoxNzY0OTE1ODIxfQ.TqCduVe-s4yWZ0MIPhmyuGkWOyDUKOurMjU7Xao9Fk4</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+        <stringProp name="delimiter">,</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="filename">C:/Performancetest/apache-jmeter-5.6.3/bin/B4igo/Sheet.csv</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="variableNames">Servername,Email,Password</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+        <stringProp name="filename">C:/Performancetest/apache-jmeter-5.6.3/bin/B4igo/UserSheet.csv</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="variableNames">Servername</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">C:\Performancetest\apache-jmeter-5.6.3\bin\B4igo\EOLVault\EOLResult.jtl</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="UserData Set Config" enabled="true">
+        <stringProp name="filename">C:/Performancetest/apache-jmeter-5.6.3/bin/B4igo/userdata.csv</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="variableNames">username,privateKey</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="false">
+        <stringProp name="JSONPostProcessor.referenceNames">accessToken</stringProp>
+        <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.login.data.accessToken</stringProp>
+        <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+        <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
+      </JSONPostProcessor>
+      <hashTree/>
+      <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="false">
+        <intProp name="calcMode">1</intProp>
+        <doubleProp>
+          <name>throughput</name>
+          <value>40.0</value>
+          <savedValue>0.0</savedValue>
+        </doubleProp>
+      </ConstantThroughputTimer>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
