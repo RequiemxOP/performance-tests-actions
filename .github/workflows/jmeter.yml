@@ -1,157 +1,134 @@
-name: Run JMeter Vault Tests (Smart Trigger)
-permissions:
-  contents: write
+name: Run JMeter Vault Tests
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'Vaults/**.jmx'
-      - 'data/**'
+  push:
+    branches: [ main, PersonalVault ]
+    paths:
+      - 'Vaults/**.jmx'
+      - 'data/**'
+  workflow_dispatch:
 
 jobs:
+  run-vault-tests:
+    runs-on: ubuntu-latest
 
-  test-workflow:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Greet
-        run: echo "GitHub Actions is enabled! This is a basic test job."
+    strategy:
+      matrix:
+        vault: [ 'DigitalVault', 'EOLVault', 'HealthVault', 'LegalVault', 'PersonalVault', 'Subscription' ]
 
-  detect-vaults:
-    runs-on: ubuntu-latest
-    outputs:
-      vaults: ${{ steps.find.outputs.vaults }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - name: Detect vaults changed by push
-        id: find
-        run: |
-          echo "::group::Changed files"
-          CHANGED=$(git diff --name-only HEAD^ HEAD)
-          echo "$CHANGED"
-          echo "::endgroup::"
-          # extract unique vault names (second path segment) from changed files
-          VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u || true)
-          echo "vaults found: $VAULTS"
-          # build JSON array in $GITHUB_OUTPUT, e.g. ["VaultA","VaultB"]
-          if [ -z "$VAULTS" ]; then
-            echo "vaults=[]" >> $GITHUB_OUTPUT
-          else
-            JSON="["
-            FIRST=1
-            for v in $VAULTS; do
-              if [ "$FIRST" -eq 1 ]; then
-                FIRST=0
-              else
-                JSON="$JSON,"
-              fi
-              esc=$(printf '%s' "$v" | sed 's/"/\\"/g')
-              JSON="$JSON\"$esc\""
-            done
-            JSON="$JSON]"
-            echo "vaults=$JSON" >> $GITHUB_OUTPUT
-          fi
-      - name: Show detected vaults
-        run: |
-          echo "Vaults selected: ${{ steps.find.outputs.vaults }}"
+    steps:
 
-  run-vault-tests:
-    needs: detect-vaults
-    if: needs.detect-vaults.outputs.vaults != ''
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        vault: ${{ fromJson(needs.detect-vaults.outputs.vaults) }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: Install required tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget tar xmlstarlet
-      - name: Download & extract JMeter
-        run: |
-          JMETER_VER="5.6.3"
-          wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
-          tar xzf apache-jmeter-${JMETER_VER}.tgz
-      - name: Find latest JMX inside vault
-        id: find_jmx
-        run: |
-          VAULT_DIR="Vaults/${{ matrix.vault }}"
-          LATEST=$(ls -1t "$VAULT_DIR"/*.jmx 2>/dev/null | head -n1 || true)
-          echo "found=$LATEST" >> $GITHUB_OUTPUT
-      - name: Show chosen JMX
-        if: ${{ steps.find_jmx.outputs.found != '' }}
-        run: |
-          echo "Running ${{ steps.find_jmx.outputs.found }}"
-      - name: Run JMeter
-        if: ${{ steps.find_jmx.outputs.found != '' }}
-        run: |
-          set -e
-          JMETER_HOME="apache-jmeter-5.6.3"
-          VAULT_DIR="Vaults/${{ matrix.vault }}"
-          JMX="${{ steps.find_jmx.outputs.found }}"
-          RUN_TIME=$(date +%Y%m%d-%H%M%S)
-          RUN_DIR="$VAULT_DIR/Results/$RUN_TIME"
-          mkdir -p "$RUN_DIR"
-          cp -r data "$RUN_DIR/data"
-          cp "$JMX" "$RUN_DIR/testplan.jmx"
-          echo "Normalizing Windows paths..."
-          sed -i 's#\\#/#g' "$RUN_DIR/testplan.jmx"
-          sed -i 's#[A-Za-z]:/##g' "$RUN_DIR/testplan.jmx"
-          echo "Fixing CSV filename references..."
-          for f in data/*; do
-            name=$(basename "$f")
-            xmlstarlet ed -L \
-              -u "//stringProp[@name='filename' and contains(text(), '$name')]" \
-              -v "data/$name" \
-              "$RUN_DIR/testplan.jmx" || true
-          done
-          echo "Validating CSV references..."
-          ERR=0
-          grep -oP '(?<=<stringProp name="filename">)[^<]+' "$RUN_DIR/testplan.jmx" | while read file; do
-            if [ ! -f "$RUN_DIR/$file" ]; then
-              echo "❌ Missing CSV: $file"
-              ERR=1
-            fi
-          done
-          if [ "$ERR" = "1" ]; then
-            echo "Stopping workflow. CSV missing."
-            exit 1
-          fi
-          echo "CSV OK. Running JMeter..."
-          "$JMETER_HOME/bin/jmeter" -n \
-            -t "$RUN_DIR/testplan.jmx" \
-            -l "$RUN_DIR/results.jtl" \
-            -j "$RUN_DIR/jmeter.log" \
-            -e -o "$RUN_DIR/html"
-          echo "JMeter completed."
-      - name: Upload HTML report
-        if: ${{ steps.find_jmx.outputs.found != '' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: jmeter-report-${{ matrix.vault }}
-          path: Vaults/${{ matrix.vault }}/Results/*
-      - name: Commit results back to repository
-        if: ${{ steps.find_jmx.outputs.found != '' }}
-        run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git add Vaults/${{ matrix.vault }}/Results/*
-          git commit -m "Add JMeter results for ${{ matrix.vault }} at $(date)" || echo "Nothing to commit"
-          git push || echo "Push skipped (likely no changes)"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  no-vaults:
-    needs: detect-vaults
-    if: needs.detect-vaults.outputs.vaults == ''
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "No vaults changed — skipping run."
+      - name: Set up Java (JMeter needs Java)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install required tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget tar xmlstarlet
+
+      - name: Download & extract JMeter
+        run: |
+          JMETER_VER="5.6.3"
+          wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
+          tar xzf apache-jmeter-${JMETER_VER}.tgz
+
+      - name: Prepare results folder
+        run: mkdir -p results
+
+      - name: Find latest JMX in the vault
+        id: find_jmx
+        run: |
+          VAULT_DIR="Vaults/${{ matrix.vault }}"
+          LATEST=$(ls -1t "${VAULT_DIR}"/*.jmx 2>/dev/null | head -n1 || true)
+          if [ -n "$LATEST" ]; then
+            echo "found=$LATEST" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show chosen JMX
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: echo "Running ${{ steps.find_jmx.outputs.found }}"
+
+      # ---------------------------------------------------------
+      # 🚀 FULLY UPGRADED RUN JMETER WITH NORMALIZATION + VALIDATION
+      # ---------------------------------------------------------
+      - name: Run JMeter
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: |
+          set -e
+          JMETER_HOME="apache-jmeter-5.6.3"
+          JMX="${{ steps.find_jmx.outputs.found }}"
+          RUN_ID="${{ matrix.vault }}-$(date +%Y%m%d-%H%M%S)"
+          RUN_DIR="results/${RUN_ID}"
+
+          mkdir -p "${RUN_DIR}"
+          cp -r data "${RUN_DIR}/data"
+
+          echo "Copied JMX:"
+          cp "${JMX}" "${RUN_DIR}/testplan.jmx"
+
+          echo "Normalizing JMX paths..."
+
+          # Convert Windows backslashes -> /
+          sed -i 's#\\\\#/#g' "${RUN_DIR}/testplan.jmx"
+
+          # Remove drive letters like C:/ or D:/
+          sed -i 's#[A-Za-z]:/##g' "${RUN_DIR}/testplan.jmx"
+
+          # XML-safe normalization of CSV filename references
+          for f in data/*; do
+            name=$(basename "$f")
+            xmlstarlet ed -L \
+              -u "//stringProp[@name='filename' and contains(text(), '${name}')]" \
+              -v "data/${name}" \
+              "${RUN_DIR}/testplan.jmx" || true
+          done
+
+          echo "After XML normalization (filenames found):"
+          xmlstarlet sel -t -m "//stringProp[@name='filename']" -v . -n "${RUN_DIR}/testplan.jmx" || true
+
+          echo "Validating referenced CSV files exist..."
+
+          # Validate that referenced CSVs exist before running JMeter
+          ERR=0
+          grep -oP '(?<=<stringProp name="filename">)[^<]+' "${RUN_DIR}/testplan.jmx" | while read file; do
+            if [ ! -f "${RUN_DIR}/${file}" ]; then
+              echo "❌ ERROR: Missing CSV referenced in JMX: ${file}"
+              ERR=1
+            fi
+          done
+
+          if [ "$ERR" = "1" ]; then
+            echo "Stopping because CSV references are incorrect."
+            exit 1
+          fi
+
+          echo "CSV validation passed. Running JMeter."
+
+          "${JMETER_HOME}/bin/jmeter" -n \
+            -t "${RUN_DIR}/testplan.jmx" \
+            -l "${RUN_DIR}/results.jtl" \
+            -j "${RUN_DIR}/jmeter.log" \
+            -e -o "${RUN_DIR}/html"
+
+          echo "JMeter run completed."
+
+      - name: Upload report
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-report-${{ matrix.vault }}
+          path: results/${{ matrix.vault }}-*/
+
+      - name: No JMX found
+        if: ${{ steps.find_jmx.outputs.found == '' }}
+        run: echo "Skipping vault ${{ matrix.vault }} (No JMX found)"
