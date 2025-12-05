@@ -1,12 +1,12 @@
 name: Run JMeter Vault Tests
 
 on:
-  push:
-    branches: [ main, PersonalVault ]
-    paths:
-      - 'Vaults/**.jmx'
-      - 'data/**'
-  workflow_dispatch:
+  push:
+    branches: [ main, PersonalVault ]
+    paths:
+      - 'Vaults/**.jmx'
+      - 'data/**'
+  workflow_dispatch:
 
 jobs:
   run-vault-tests:
@@ -132,3 +132,4 @@ jobs:
       - name: No JMX found
         if: ${{ steps.find_jmx.outputs.found == '' }}
         run: echo "Skipping vault ${{ matrix.vault }} (No JMX found)"
+
