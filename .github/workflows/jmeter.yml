@@ -23,7 +23,7 @@ on:
           - Subscription
 
 jobs:
-# QUICK TEST: Prove GitHub Actions is enabled and able to run
+
   test-workflow:
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-
       - name: Detect vaults changed by push
         id: find
         run: |
@@ -59,7 +58,6 @@ jobs:
           else
             echo "vaults=$VAULTS" >> $GITHUB_OUTPUT
           fi
-
       - name: Show detected vaults
         run: echo "Vaults selected: ${{ steps.find.outputs.vaults }}"
 
