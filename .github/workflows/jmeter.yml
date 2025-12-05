@@ -32,12 +32,26 @@ jobs:
           CHANGED=$(git diff --name-only HEAD^ HEAD)
           echo "$CHANGED"
           echo "::endgroup::"
-          VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u | xargs || true)
+          # extract unique vault names (second path segment) from changed files
+          VAULTS=$(echo "$CHANGED" | grep "^Vaults/" | cut -d'/' -f2 | sort -u || true)
           echo "vaults found: $VAULTS"
+          # build JSON array in $GITHUB_OUTPUT, e.g. ["VaultA","VaultB"]
           if [ -z "$VAULTS" ]; then
-            echo "vaults=" >> $GITHUB_OUTPUT
+            echo "vaults=[]" >> $GITHUB_OUTPUT
           else
-            echo "vaults=$VAULTS" >> $GITHUB_OUTPUT
+            JSON="["
+            FIRST=1
+            for v in $VAULTS; do
+              if [ "$FIRST" -eq 1 ]; then
+                FIRST=0
+              else
+                JSON="$JSON,"
+              fi
+              esc=$(printf '%s' "$v" | sed 's/"/\\"/g')
+              JSON="$JSON\"$esc\""
+            done
+            JSON="$JSON]"
+            echo "vaults=$JSON" >> $GITHUB_OUTPUT
           fi
       - name: Show detected vaults
         run: |
@@ -49,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        vault: ${{ needs.detect-vaults.outputs.vaults && needs.detect-vaults.outputs.vaults.split(' ') || [] }}
+        vault: ${{ fromJson(needs.detect-vaults.outputs.vaults) }}
     steps:
       - uses: actions/checkout@v4
         with:
