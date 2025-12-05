@@ -17,7 +17,6 @@ jobs:
         vault: [ "DigitalVault", "EOLVault", "HealthVault", "LegalVault", "PersonalVault", "Subscription" ]
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -26,7 +25,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: "temurin"
+          distribution: temurin
           java-version: "17"
 
       - name: Install required tools
@@ -34,25 +33,25 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget tar xmlstarlet
 
-      - name: Download & extract JMeter
+      - name: Download JMeter
         run: |
           JMETER_VER="5.6.3"
           wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
-          tar xzf apache-jmeter-${JMETER_VER}.tgz
+          tar -xzf apache-jmeter-${JMETER_VER}.tgz
 
-      - name: Prepare results folder
+      - name: Create results folder
         run: mkdir -p results
 
-      - name: Find latest JMX in the vault
+      - name: Find latest JMX
         id: find_jmx
         run: |
           VAULT_DIR="Vaults/${{ matrix.vault }}"
           LATEST=$(ls -1t "${VAULT_DIR}"/*.jmx 2>/dev/null | head -n 1 || true)
           echo "found=$LATEST" >> "$GITHUB_OUTPUT"
 
-      - name: Show chosen JMX
+      - name: Display selected JMX
         if: ${{ steps.find_jmx.outputs.found != '' }}
-        run: echo "Running ${{ steps.find_jmx.outputs.found }}"
+        run: echo "Using JMX: ${{ steps.find_jmx.outputs.found }}"
 
       - name: Run JMeter
         if: ${{ steps.find_jmx.outputs.found != '' }}
@@ -65,7 +64,6 @@ jobs:
 
           mkdir -p "${RUN_DIR}"
           cp -r data "${RUN_DIR}/data"
-
           cp "${JMX}" "${RUN_DIR}/testplan.jmx"
 
           sed -i 's#\\\\#/#g' "${RUN_DIR}/testplan.jmx"
@@ -97,13 +95,13 @@ jobs:
             -j "${RUN_DIR}/jmeter.log" \
             -e -o "${RUN_DIR}/html"
 
-      - name: Upload report
+      - name: Upload JMeter Report
         if: ${{ steps.find_jmx.outputs.found != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: jmeter-report-${{ matrix.vault }}
-          path: results/${{ matrix.vault }}-*/
+          name: "jmeter-report-${{ matrix.vault }}"
+          path: "results/${{ matrix.vault }}-*"
 
-      - name: No JMX found
+      - name: No JMX Found
         if: ${{ steps.find_jmx.outputs.found == '' }}
-        run: echo "Skipping vault ${{ matrix.vault }}: No JMX found"
+        run: echo "No JMX found for vault: ${{ matrix.vault }}"
