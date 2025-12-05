@@ -1,0 +1,1586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">100</intProp>
+        <intProp name="ThreadGroup.ramp_time">100</intProp>
+        <longProp name="ThreadGroup.duration">3600</longProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">true</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>40.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Hello Server" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;HelloServer&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;address&quot;:&quot;0x1051b5432380131ae382BBa59eC95777A223f34A&quot;}},&quot;query&quot;:&quot;mutation HelloServer($input: SiweHelloRequestInput!) {\n  HelloServer(input: $input) {\n    message\n    success\n    code\n    error\n    siweMessage\n    requestId\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getProfilePicture" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getProfilePicture&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;}},&quot;query&quot;:&quot;query getProfilePicture($input: GetProfilePictureInput!) {\n  getProfilePicture(input: $input) {\n    message\n    code\n    success\n    errorMessage\n    fileUrl\n    originalFilename\n    fileContent\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getPendingIssue" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getPendingIssue&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;},&quot;query&quot;:&quot;query getPendingIssue($userId: String!) {\n  getPendingIssue(userId: $userId) {\n    errorMessage\n    success\n    message\n    code\n    pendingSubs {\n      name\n      subscriberId\n      sharedModules\n      contactNumber\n      email\n      dids {\n        did\n        isBackup\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getProxyUserMessage" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getProxyUserMessage&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;vaultId&quot;:1}},&quot;query&quot;:&quot;query getProxyUserMessage($input: GetProxyUserMessageInput!) {\n  getProxyUserMessage(input: $input) {\n    code\n    success\n    message\n    error\n    data {\n      isProxyActive\n      message\n      proxyId\n      trustedHelperName\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ListSubscriptions" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;ListSubscriptions&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;}},&quot;query&quot;:&quot;query ListSubscriptions($input: ListSubscriptionRequest!) {\n  listSubscriptions(input: $input) {\n    userId\n    subscriptionHistory {\n      userId\n      planId\n      plan\n      tenureId\n      tenure\n      startDate\n      expiryOn\n      amountBeforeDiscount\n      totalDiscount\n      amountPaid\n      transactionTime\n      autoRenew\n      transactionId\n      stripeCustomerId\n      createdBy\n      updatedBy\n      createdAt\n      updatedAt\n      id\n      isActive\n      __typename\n    }\n    errorMessage\n    success\n    message\n    code\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="storeVC" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;storeVC&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;VCs&quot;:[]}},&quot;query&quot;:&quot;mutation storeVC($input: StoreVCRequest!) {\n  StoreVC(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getDashboard" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getDashboard&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;vaultId&quot;:1}},&quot;query&quot;:&quot;query getDashboard($input: Dashboardinput!) {\n  getDashboard(input: $input) {\n    submodules {\n      vaultId\n      vaultName\n      groups {\n        groupId\n        groupName\n        modules {\n          moduleId\n          moduleName\n          completed\n          remaining\n          recordCount\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    message\n    code\n    success\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAllIdentityProofs" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAllIdentityProofs&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;},&quot;query&quot;:&quot;query GetAllIdentityProofs($userId: String!) {\n  getAllIdentityProofs(userId: $userId) {\n    message\n    success\n    code\n    error\n    identityProofs {\n      id\n      userId\n      identityProofTypeId\n      identityProofType\n      nationality\n      documentNumber\n      createdBy\n      updatedBy\n      createdAt\n      updatedAt\n      recordIdentifier\n      otherIdentity\n      issueDate\n      expiryDate\n      neverExpires\n      files {\n        id\n        identityProofId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getIdentityProofTypes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getIdentityProofTypes&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getIdentityProofTypes {\n  getIdentityProofTypes {\n    code\n    success\n    message\n    error\n    identityProofs {\n      id\n      identityType\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetIdentityProofById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetIdentityProofById&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:581},&quot;query&quot;:&quot;query GetIdentityProofById($id: Int!, $userId: String!) {\n  getIdentityProofById(id: $id, userId: $userId) {\n    message\n    success\n    code\n    error\n    data {\n      id\n      userId\n      identityProofTypeId\n      identityProofType\n      nationality\n      documentNumber\n      createdBy\n      updatedBy\n      createdAt\n      updatedAt\n      issueDate\n      expiryDate\n      neverExpires\n      otherIdentity\n      files {\n        id\n        identityProofId\n        documentFileLink\n        originalFileName\n        createdAt\n        updatedAt\n        createdBy\n        updatedBy\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateIdentityProof" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;UpdateIdentityProof&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;id&quot;:581,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;identityProofTypeId&quot;:5,&quot;nationality&quot;:&quot;76&quot;,&quot;documentNumber&quot;:&quot;BOMPG9992Q&quot;,&quot;action&quot;:&quot;update&quot;,&quot;files&quot;:[],&quot;otherIdentity&quot;:&quot;PAN Card&quot;,&quot;issueDate&quot;:&quot;2021-08-01T00:00:00Z&quot;,&quot;expiryDate&quot;:&quot;2025-08-29T00:00:00Z&quot;,&quot;neverExpires&quot;:false}},&quot;query&quot;:&quot;mutation UpdateIdentityProof($input: updateIdentityProofInput!) {\n  updateIdentityProof(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAllAddressDetails" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAllAddressDetails&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;limit&quot;:10000,&quot;page&quot;:1,&quot;sortOrder&quot;:&quot;DESC&quot;}},&quot;query&quot;:&quot;query GetAllAddressDetails($input: getAllAddressDetailsInput!) {\n  GetAllAddressDetails(input: $input) {\n    message\n    success\n    code\n    error\n    addressDetails {\n      id\n      userId\n      addressTypeId\n      typeOfAddress\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      isCurrentAddress\n      startDate\n      endDate\n      createdBy\n      updatedBy\n      createdAt\n      updatedAt\n      recordIdentifier\n      subTitle\n      files {\n        id\n        addressId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    totalPages\n    totalRecords\n    currentPage\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAddressTypes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getAddressTypes&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getAddressTypes {\n  getAddressTypes {\n    code\n    success\n    message\n    error\n    addressTypes {\n      id\n      typeOfAddress\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAddressDetailsById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAddressDetailsById&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:435}},&quot;query&quot;:&quot;query GetAddressDetailsById($input: getAddressDetailsByIdInput!) {\n  GetAddressDetailsById(input: $input) {\n    message\n    success\n    code\n    error\n    addressDetailsById {\n      id\n      userId\n      addressTypeId\n      typeOfAddress\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      isCurrentAddress\n      startDate\n      endDate\n      createdBy\n      updatedBy\n      createdAt\n      updatedAt\n      companyName\n      files {\n        addressId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="updateAddressDetails" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;updateAddressDetails&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:435,&quot;addressTypeId&quot;:3,&quot;streetNameAndNumber&quot;:&quot;HA form, second Street, 4th cross &quot;,&quot;apartmentUnitNumber&quot;:&quot;37 Aashirvad building &quot;,&quot;city&quot;:&quot;Bangalore &quot;,&quot;state&quot;:&quot;61&quot;,&quot;country&quot;:&quot;2&quot;,&quot;pincode&quot;:&quot;560006&quot;,&quot;isCurrentAddress&quot;:false,&quot;startDate&quot;:&quot;2023-08-01&quot;,&quot;endDate&quot;:&quot;2027-08-31&quot;,&quot;files&quot;:[],&quot;companyName&quot;:&quot;&quot;,&quot;othersValue&quot;:&quot;Hostel &quot;}},&quot;query&quot;:&quot;mutation updateAddressDetails($input: updateAddressDetailsinput!) {\n  updateAddressDetails(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EmailOTP" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;emailOtp&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;email&quot;:&quot;chandana@yopmail.com&quot;}},&quot;query&quot;:&quot;mutation emailOtp($input: EmailOtpInput!) {\n  emailOtp(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="verifyEmailOtp" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;verifyEmailOtp&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;64411b42-b0bc-4914-98a7-3351dbae0199&quot;,&quot;otp&quot;:&quot;984194&quot;}},&quot;query&quot;:&quot;mutation verifyEmailOtp($input: VerifyEmailOtpInput!) {\n  verifyEmail(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getPricingPlans" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getPricingPlans&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getPricingPlans {\n  getPricingPlans {\n    code\n    success\n    message\n    error\n    pricingPlans {\n      id\n      planName\n      monthlyPrice\n      planDescription\n      yearlyPrice\n      monthlyPriceId\n      yearlyPriceId\n      threeYearPriceId\n      lifetimePriceId\n      planFeatures\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetPlanFeatures" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetPlanFeatures&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query GetPlanFeatures {\n  getPlanFeatures {\n    pricingTable {\n      vaults {\n        title\n        modules {\n          title\n          priced\n          basic\n          standard\n          advanced\n          subModules {\n            title\n            basic\n            standard\n            advanced\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ApplyCoupon" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;ApplyCoupon&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;code&quot;:&quot;SPECIALRELEASE2025&quot;,&quot;userId&quot;:&quot;64411b42-b0bc-4914-98a7-3351dbae0199&quot;,&quot;orderAmount&quot;:30,&quot;tenureId&quot;:2,&quot;planId&quot;:2}},&quot;query&quot;:&quot;mutation ApplyCoupon($input: ApplyCouponInput!) {\n  applyCoupon(input: $input) {\n    success\n    message\n    errorMessage\n    couponCode\n    appliedDiscount\n    code\n    planId\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="proceedToCheckOut" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;proceedToCheckOut&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;64411b42-b0bc-4914-98a7-3351dbae0199&quot;,&quot;planId&quot;:3,&quot;tenureId&quot;:2,&quot;priceId&quot;:&quot;something&quot;,&quot;couponId&quot;:1113}},&quot;query&quot;:&quot;mutation proceedToCheckOut($input: ProceedToCheckOutInput!) {\n  proceedToCheckOut(input: $input) {\n    message\n    success\n    code\n    error\n    sessionId\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="SetCredentialPair" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;SetCredentialPair&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;64411b42-b0bc-4914-98a7-3351dbae0199&quot;,&quot;pairs&quot;:[{&quot;key&quot;:&quot;VPNUk3ll36g2zzM+VuIkXIEShV6N7YYEYWuGwDoey44=&quot;,&quot;value&quot;:&quot;{\&quot;version\&quot;:\&quot;x25519-xsalsa20-poly1305\&quot;,\&quot;nonce\&quot;:\&quot;00/JzSDQ45By+JnZ0sAxUqvk6vhKy/0n\&quot;,\&quot;ephemPublicKey\&quot;:\&quot;b+UMNkD3L6u+yBqt7YbJuBxcXux6ngUEymvM81sdF1E=\&quot;,\&quot;ciphertext\&quot;:\&quot;O+FUlvLQq0U8NTbe9CflgnWh\&quot;}&quot;}],&quot;createdBy&quot;:&quot;64411b42-b0bc-4914-98a7-3351dbae0199&quot;}},&quot;query&quot;:&quot;mutation SetCredentialPair($input: SetCredentialPairInput!) {\n  SetCredentialPair(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VerifySignature" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;VerifySignature&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;signature&quot;:&quot;0x4c54c7d7da3e2c322e9c8901f6d658103a481d8513597b4aae024f22420893e73fbebbc4f7c2e077ad9881b43c01998644f8b82ecece9309f23a5311cc7ec68e1b&quot;,&quot;requestId&quot;:&quot;74d066ff-e7af-4e69-b93c-645153cf85e7&quot;}},&quot;query&quot;:&quot;mutation VerifySignature($input: VerifySignatureRequestInput!) {\n  VerifySignature(input: $input) {\n    message\n    success\n    code\n    error\n    jwt\n    userId\n    hasBackedUp\n    preferredName\n    braceletUserId\n    email\n    dids {\n      didDump\n      isBackup\n      isMedical\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">true</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>20.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAddressDependentsByUserId" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAddressDependentsByUserId&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;currentRelation&quot;:true},&quot;query&quot;:&quot;query GetAddressDependentsByUserId($userId: String!, $currentRelation: Boolean!) {\n  getAddressDependentsByUserId(userId: $userId, currentRelation: $currentRelation) {\n    message\n    code\n    success\n    error\n    data {\n      relationId\n      partnerName\n      dependentName\n      name\n      date\n      relationshipName\n      recordIdentifier\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getDependentTypes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetDependentTypes&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;}},&quot;query&quot;:&quot;query GetDependentTypes {\n  getDependentTypes {\n    code\n    success\n    message\n    error\n    dependents {\n      id\n      dependent\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAddressDependentsById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAddressDependentsById&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:227},&quot;query&quot;:&quot;query GetAddressDependentsById($userId: String!, $id: Int!) {\n  getAddressDependentsById(request: {userId: $userId, id: $id}) {\n    message\n    success\n    code\n    error\n    data {\n      userId\n      type\n      typeId\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      isCurrentRelation\n      startDate\n      endDate\n      othersValue\n      name\n      dob\n      dependentStatus\n      age\n      emailId\n      phoneNumber\n      gender\n      contactId\n      notes\n      typeName\n      id\n      actualId\n      files {\n        id\n        originalFilename\n        relationId\n        documentLink\n        createdAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="relationshipStatusDropDown" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;relationshipStatusDropDown&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;}},&quot;query&quot;:&quot;query relationshipStatusDropDown($input: RelationshipStatusDropDownRequest!) {\n  relationshipStatusDropDown(input: $input) {\n    options {\n      id\n      relationshipStatus\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getContactByUserId" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetContactByUserID&quot;,&quot;variables&quot;:{&quot;request&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;page&quot;:1,&quot;count&quot;:100,&quot;filters&quot;:{&quot;search&quot;:&quot;&quot;,&quot;contactTypeIds&quot;:[],&quot;isSubscriber&quot;:false,&quot;isTrustedHelper&quot;:false,&quot;isWitness&quot;:false,&quot;isCustodian&quot;:false,&quot;isPowerOfAttorney&quot;:false}}},&quot;query&quot;:&quot;query GetContactByUserID($request: GetContactByUserIdRequest!) {\n  getContactByUserId(request: $request) {\n    success\n    message\n    code\n    totalRecords\n    currentPage\n    totalPages\n    contactDetails {\n      id\n      userId\n      contactTypeId\n      name\n      companyName\n      contactNumber\n      employeeId\n      relationship\n      emailId\n      streetNameAndNumber\n      apartmentNumber\n      city\n      state\n      pincode\n      country\n      createdBy\n      updatedBy\n      createdAt\n      recordIdentifier\n      dob\n      isDeceased\n      dateOfDeath\n      roleType\n      typeOfAttorny\n      licensedInState\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetContactById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetContactById&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:889},&quot;query&quot;:&quot;query GetContactById($id: Int!, $userId: String!) {\n  getContactById(id: $id, userId: $userId) {\n    success\n    message\n    code\n    record {\n      id\n      userId\n      contactTypeId\n      name\n      companyName\n      contactNumber\n      employeeId\n      relationship\n      emailId\n      streetNameAndNumber\n      apartmentNumber\n      city\n      state\n      pincode\n      country\n      createdBy\n      updatedBy\n      createdAt\n      dob\n      isDeceased\n      dateOfDeath\n      jobRole\n      typeOfAttorny\n      licensedInState\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateContact" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;UpdateContact&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;id&quot;:889,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;contactTypeId&quot;:[4],&quot;name&quot;:&quot;Ananda&quot;,&quot;contactNumber&quot;:&quot;+918088981503&quot;,&quot;companyName&quot;:&quot;&quot;,&quot;employeeId&quot;:&quot;&quot;,&quot;relationship&quot;:&quot;Aunty&quot;,&quot;emailId&quot;:&quot;ananda@yopmail.com&quot;,&quot;updatedBy&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;streetNameAndNumber&quot;:&quot;&quot;,&quot;apartmentNumber&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;state&quot;:&quot;&quot;,&quot;pincode&quot;:&quot;&quot;,&quot;country&quot;:&quot;&quot;,&quot;Others&quot;:&quot;Aunty&quot;,&quot;dob&quot;:&quot;2000-08-01&quot;,&quot;isDeceased&quot;:false,&quot;dateOfDeath&quot;:&quot;&quot;,&quot;jobRole&quot;:&quot;&quot;,&quot;typeOfAttorny&quot;:&quot;&quot;,&quot;licensedInState&quot;:&quot;&quot;}},&quot;query&quot;:&quot;mutation UpdateContact($input: UpdateContactInput!) {\n  updateContact(input: $input) {\n    success\n    message\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetEducationByUserID" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetEducationByUserID&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;page&quot;:1,&quot;count&quot;:10,&quot;others&quot;:&quot;false&quot;},&quot;query&quot;:&quot;query GetEducationByUserID($userId: String!, $page: Int!, $count: Int!, $others: String!) {\n  getEducationByUserId(\n    userId: $userId\n    page: $page\n    count: $count\n    others: $others\n  ) {\n    success\n    code\n    message\n    totalRecords\n    currentPage\n    totalPages\n    records {\n      id\n      educationCertificateId\n      educationCertificateName\n      nameAsPerCertificate\n      universityOrCollegeName\n      rollNo\n      completionYear\n      isCurrentlyPursuing\n      startDate\n      endDate\n      userId\n      createdAt\n      updatedAt\n      createdBy\n      updatedBy\n      status\n      recordIdentifier\n      files {\n        id\n        educationId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getEducationById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetEducationByID&quot;,&quot;variables&quot;:{&quot;id&quot;:209,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;},&quot;query&quot;:&quot;query GetEducationByID($id: Int!, $userId: String!) {\n  getEducationById(id: $id, userId: $userId) {\n    success\n    code\n    message\n    record {\n      id\n      educationCertificateId\n      educationCertificateName\n      nameAsPerCertificate\n      universityOrCollegeName\n      rollNo\n      completionYear\n      isCurrentlyPursuing\n      startDate\n      endDate\n      userId\n      createdAt\n      updatedAt\n      createdBy\n      updatedBy\n      status\n      files {\n        id\n        educationId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateEducation" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;UpdateEducation&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;educationCertificateId&quot;:2,&quot;educationCertificateName&quot;:&quot;Bachelor’s Degree&quot;,&quot;nameAsPerCertificate&quot;:&quot;Provisional &quot;,&quot;universityOrCollegeName&quot;:&quot;JNTUA&quot;,&quot;rollNo&quot;:&quot;T2500011&quot;,&quot;completionYear&quot;:2001,&quot;isCurrentlyPursuing&quot;:false,&quot;startDate&quot;:&quot;2009-06-01&quot;,&quot;endDate&quot;:&quot;2013-06-30&quot;,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;others&quot;:&quot;&quot;,&quot;updatedBy&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;files&quot;:[],&quot;id&quot;:209}},&quot;query&quot;:&quot;mutation UpdateEducation($input: UpdateEducationInput!) {\n  updateEducation(input: $input) {\n    success\n    code\n    message\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetSubCategories" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetSubCategories&quot;,&quot;variables&quot;:{&quot;industryId&quot;:1},&quot;query&quot;:&quot;query GetSubCategories($industryId: Int!) {\n  getSubCategories(industryId: $industryId) {\n    code\n    success\n    message\n    error\n    subCategories {\n      id\n      categoryId\n      name\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAllEmployment" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getAllEmployment&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;page&quot;:1,&quot;limit&quot;:10000},&quot;query&quot;:&quot;query getAllEmployment($userId: String!, $page: Int!, $limit: Int!) {\n  getAllEmployment(userId: $userId, page: $page, limit: $limit) {\n    message\n    success\n    code\n    error\n    employment {\n      id\n      userId\n      employmentTypeId\n      employmentType\n      companyName\n      designation\n      salaryRangeId\n      salaryRange\n      typeOfEmploymentId\n      typeOfEmployment\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      currentEmployment\n      startDate\n      endDate\n      createdAt\n      updatedAt\n      createdBy\n      updatedBy\n      recordIdentifier\n      files {\n        fileUrl\n        fileContent\n        originalFilename\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getSalaryRange" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getSalaryRange&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getSalaryRange {\n  getSalaryRange {\n    code\n    success\n    message\n    error\n    salaryRange {\n      id\n      salaryRange\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getTypeOfEmployment" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getTypeOfEmployment&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getTypeOfEmployment {\n  getTypeOfEmployment {\n    code\n    success\n    message\n    error\n    typeOfEmployment {\n      id\n      typeOfEmployment\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="updateEmployment" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;updateEmployment&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;id&quot;:184,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;employmentTypeId&quot;:1,&quot;typeOfEmploymentId&quot;:1,&quot;othersValue&quot;:&quot;&quot;,&quot;companyName&quot;:&quot;SSSSS&quot;,&quot;designation&quot;:&quot;Tester&quot;,&quot;salaryRangeId&quot;:1,&quot;streetNameAndNumber&quot;:&quot;&quot;,&quot;apartmentUnitNumber&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;state&quot;:&quot;1&quot;,&quot;pincode&quot;:&quot;&quot;,&quot;country&quot;:&quot;1&quot;,&quot;currentEmployment&quot;:true,&quot;startDate&quot;:&quot;2025-08-13&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;files&quot;:[],&quot;notes&quot;:&quot;&quot;,&quot;employeeId&quot;:&quot;SSS11111&quot;}},&quot;query&quot;:&quot;mutation updateEmployment($input: updateEmploymentInput!) {\n  updateEmployment(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getEmploymentById" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getEmploymentById&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:184},&quot;query&quot;:&quot;query getEmploymentById($id: Int!, $userId: String!) {\n  getEmploymentById(id: $id, userId: $userId) {\n    message\n    success\n    code\n    error\n    employment {\n      id\n      userId\n      employmentTypeId\n      employmentType\n      companyName\n      employeeId\n      designation\n      salaryRangeId\n      salaryRange\n      typeOfEmploymentId\n      typeOfEmployment\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      currentEmployment\n      notes\n      startDate\n      endDate\n      createdAt\n      updatedAt\n      createdBy\n      updatedBy\n      files {\n        id\n        fileContent\n        fileUrl\n        originalFilename\n        createdBy\n        createdAt\n        updatedAt\n        updatedBy\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getEmploymentType" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getEmploymentType&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getEmploymentType {\n  getEmploymentType {\n    code\n    success\n    message\n    error\n    employmentType {\n      id\n      employmentType\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="addEmployment" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;addEmployment&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;employmentTypeId&quot;:3,&quot;typeOfEmploymentId&quot;:0,&quot;othersValue&quot;:&quot;&quot;,&quot;companyName&quot;:&quot;&quot;,&quot;designation&quot;:&quot;&quot;,&quot;salaryRangeId&quot;:0,&quot;streetNameAndNumber&quot;:&quot;&quot;,&quot;apartmentUnitNumber&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;state&quot;:&quot;1&quot;,&quot;pincode&quot;:&quot;&quot;,&quot;country&quot;:&quot;1&quot;,&quot;currentEmployment&quot;:true,&quot;startDate&quot;:&quot;&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;files&quot;:[],&quot;notes&quot;:&quot;sacewcs&quot;,&quot;employeeId&quot;:&quot;&quot;}},&quot;query&quot;:&quot;mutation addEmployment($input: addEmploymentInput!) {\n  addEmployment(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteSkillSet" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;DeleteSkillSet&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;industryId&quot;:11,&quot;categoryId&quot;:0,&quot;skillId&quot;:0}},&quot;query&quot;:&quot;mutation DeleteSkillSet($input: DeleteSkillSetRequest!) {\n  deleteSkillSet(input: $input) {\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">true</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>10.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="printPdf" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;printPdf&quot;,&quot;variables&quot;:{&quot;request&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;vaultId&quot;:1,&quot;moduleIds&quot;:[1,2,4,7,3,33,6]}},&quot;query&quot;:&quot;query printPdf($request: PrintPdfRequestInput!) {\n  printPdf(request: $request) {\n    identityProofs {\n      id\n      identityProofTypeId\n      identityProofType\n      nationality\n      documentNumber\n      subTitle\n      files {\n        id\n        identityProofId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    addressDetails {\n      id\n      typeOfAddress\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      isCurrentAddress\n      startDate\n      endDate\n      subTitle\n      files {\n        id\n        addressId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    educationDetails {\n      id\n      educationCertificateName\n      nameAsPerCertificate\n      universityOrCollegeName\n      rollNo\n      completionYear\n      isCurrentlyPursuing\n      startDate\n      endDate\n      status\n      subTitle\n      files {\n        id\n        educationId\n        documentFileLink\n        originalFileName\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        __typename\n      }\n      __typename\n    }\n    employmentDetails {\n      id\n      employmentType\n      companyName\n      designation\n      salaryRange\n      typeOfEmployment\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      currentEmployment\n      startDate\n      endDate\n      notes\n      employeeId\n      subTitle\n      files {\n        fileUrl\n        fileContent\n        originalFilename\n        createdBy\n        updatedBy\n        createdAt\n        updatedAt\n        id\n        __typename\n      }\n      __typename\n    }\n    contactDetails {\n      name\n      contactNumber\n      companyName\n      employeeId\n      relationship\n      emailId\n      streetNameAndNumber\n      apartmentNumber\n      city\n      state\n      pincode\n      country\n      id\n      relationId\n      subTitle\n      __typename\n    }\n    myRelationship {\n      id\n      type\n      typeName\n      name\n      dob\n      age\n      dependentStatus\n      emailId\n      phoneNumber\n      gender\n      notes\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      country\n      pincode\n      isCurrentRelation\n      startDate\n      endDate\n      othersValue\n      files {\n        id\n        originalFilename\n        relationId\n        documentLink\n        createdAt\n        __typename\n      }\n      actualId\n      __typename\n    }\n    skillSet {\n      id\n      industryId\n      industry\n      createdAt\n      categories {\n        categoryId\n        categoryName\n        skills {\n          skillId\n          skillName\n          certificationStatusId\n          certificationStatus\n          certificationName\n          proficiencyId\n          proficiency\n          experienceYears\n          experienceMonths\n          notes\n          files {\n            originalFileName\n            fileURL\n            id\n            skillId\n            createdAt\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="addRelationAndDependents" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="operations" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;addRelationAndDependents&quot;,&quot;variables&quot;:{&quot;input&quot;:[{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;type&quot;:&quot;Relationship&quot;,&quot;typeId&quot;:2,&quot;name&quot;:&quot;Yaswanth&quot;,&quot;dob&quot;:&quot;1990-10-01&quot;,&quot;age&quot;:&quot;35&quot;,&quot;emailId&quot;:&quot;yaswanth@yopmail.com&quot;,&quot;phoneNumber&quot;:&quot;+917665179873&quot;,&quot;gender&quot;:&quot;male&quot;,&quot;dependentStatus&quot;:&quot;&quot;,&quot;streetNameAndNumber&quot;:&quot;&quot;,&quot;apartmentUnitNumber&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;state&quot;:&quot;0&quot;,&quot;country&quot;:&quot;1&quot;,&quot;pincode&quot;:&quot;&quot;,&quot;isCurrentRelation&quot;:true,&quot;startDate&quot;:&quot;2022-10-15&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;notes&quot;:&quot;&quot;,&quot;contactId&quot;:759,&quot;typeName&quot;:&quot;married&quot;,&quot;files&quot;:[{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;Health_Secured_PDF (18).pdf&quot;}]},{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;type&quot;:&quot;Dependents&quot;,&quot;typeId&quot;:1,&quot;name&quot;:&quot;priya&quot;,&quot;dob&quot;:&quot;2023-10-10&quot;,&quot;age&quot;:&quot;2&quot;,&quot;emailId&quot;:&quot;&quot;,&quot;phoneNumber&quot;:&quot;&quot;,&quot;gender&quot;:&quot;&quot;,&quot;dependentStatus&quot;:&quot;Active&quot;,&quot;streetNameAndNumber&quot;:&quot;&quot;,&quot;apartmentUnitNumber&quot;:&quot;&quot;,&quot;city&quot;:&quot;&quot;,&quot;state&quot;:51,&quot;country&quot;:2,&quot;pincode&quot;:&quot;&quot;,&quot;isCurrentRelation&quot;:false,&quot;startDate&quot;:&quot;&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;notes&quot;:&quot;&quot;,&quot;contactId&quot;:0,&quot;typeName&quot;:&quot;&quot;,&quot;files&quot;:[{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;qr-code (14).png&quot;}]},{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;type&quot;:&quot;ExtendedFamily&quot;,&quot;typeId&quot;:0,&quot;name&quot;:&quot;Isha&quot;,&quot;dob&quot;:&quot;2023-10-04&quot;,&quot;age&quot;:&quot;2&quot;,&quot;emailId&quot;:&quot;&quot;,&quot;phoneNumber&quot;:&quot;918088981503&quot;,&quot;gender&quot;:&quot;female&quot;,&quot;dependentStatus&quot;:&quot;&quot;,&quot;streetNameAndNumber&quot;:&quot;Mariyanna palya&quot;,&quot;apartmentUnitNumber&quot;:&quot;38-20-30&quot;,&quot;city&quot;:&quot;Bangalore&quot;,&quot;state&quot;:61,&quot;country&quot;:2,&quot;pincode&quot;:&quot;560024&quot;,&quot;isCurrentRelation&quot;:false,&quot;startDate&quot;:&quot;&quot;,&quot;endDate&quot;:&quot;&quot;,&quot;notes&quot;:&quot;&quot;,&quot;contactId&quot;:0,&quot;typeName&quot;:&quot;&quot;,&quot;files&quot;:[]}]},&quot;query&quot;:&quot;mutation addRelationAndDependents($input: [AddRelationAndDependentsRequestInput!]!) {\n  addRelationAndDependents(input: $input) {\n    message\n    success\n    code\n    error\n    data {\n      id\n      recordIdentifier\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">operations</stringProp>
+              </elementProp>
+              <elementProp name="map" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> {&quot;1&quot;:[&quot;variables.input.0.files.0.file&quot;],&quot;2&quot;:[&quot;variables.input.1.files.0.file&quot;]}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">map</stringProp>
+              </elementProp>
+              <elementProp name="1" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">(binary) </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">1</stringProp>
+              </elementProp>
+              <elementProp name="2" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">(binary) </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">2</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateB4igoProfile" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;UpdateB4igoProfile&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;addressTypeId&quot;:2,&quot;firstName&quot;:&quot;Kalpana&quot;,&quot;lastName&quot;:&quot;GK&quot;,&quot;gender&quot;:&quot;female&quot;,&quot;dob&quot;:&quot;1992-04-14T00:00:00Z&quot;,&quot;primaryEmail&quot;:&quot;g.kalpana111@gmail.com&quot;,&quot;Nationality&quot;:&quot;Indian&quot;,&quot;idTypeId&quot;:&quot;2&quot;,&quot;idNumber&quot;:&quot;T2511700&quot;,&quot;phoneNumber&quot;:&quot;+918088981503&quot;,&quot;typeOfAddress&quot;:&quot;Home&quot;,&quot;streetNameAndNumber&quot;:&quot;HA Form, Enclave&quot;,&quot;apartmentUnitNumber&quot;:&quot;37&quot;,&quot;city&quot;:&quot;bangalore&quot;,&quot;state&quot;:&quot;61&quot;,&quot;country&quot;:&quot;2&quot;,&quot;isPermanentAddress&quot;:false,&quot;permanentAddressTypeId&quot;:2,&quot;permanentTypeOfAddress&quot;:&quot;Home&quot;,&quot;permanentStreetNameAndNumber&quot;:&quot;Ramalayam street&quot;,&quot;permanentApartmentUnitNumber&quot;:&quot;1-89&quot;,&quot;permanentCity&quot;:&quot;Nellore&quot;,&quot;permanentState&quot;:&quot;51&quot;,&quot;permanentCountry&quot;:&quot;2&quot;,&quot;preferredName&quot;:&quot;Kalpana GK&quot;,&quot;twofaEnabled&quot;:&quot;true&quot;,&quot;twoFaMobile&quot;:&quot;+918088981503&quot;,&quot;languages&quot;:[&quot;Telugu&quot;,&quot;English&quot;],&quot;height&quot;:&quot;5&quot;,&quot;visionDetails&quot;:&quot;&quot;,&quot;typeOfVisionDetailType&quot;:&quot;Normal&quot;,&quot;weight&quot;:&quot;71&quot;,&quot;activityAlert&quot;:true,&quot;emailVerified&quot;:&quot;true&quot;,&quot;mobileVerified&quot;:&quot;true&quot;,&quot;profilePath&quot;:&quot;&quot;,&quot;password&quot;:&quot;&quot;,&quot;recoveryEmail&quot;:&quot;example@gmail.com&quot;,&quot;emailOtpVerified&quot;:&quot;true&quot;,&quot;mobileOtpVerified&quot;:&quot;false&quot;,&quot;typeOfVisionDetailId&quot;:1,&quot;twoFaSetpMobileOtpVerified&quot;:true,&quot;createdBy&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;id&quot;:383,&quot;isCurrentAddress&quot;:true,&quot;countryId&quot;:0,&quot;pincode&quot;:&quot;&quot;,&quot;permanentId&quot;:382,&quot;permanentPincode&quot;:&quot;&quot;,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;statusAddress&quot;:1,&quot;statuspermanentAddress&quot;:1}},&quot;query&quot;:&quot;mutation UpdateB4igoProfile($input: UpdateB4igoProfileInput!) {\n  updateB4igoProfile(input: $input) {\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getB4igoProfile" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getB4igoProfile&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;},&quot;query&quot;:&quot;query getB4igoProfile($userId: String!) {\n  getB4igoProfile(userId: $userId) {\n    message\n    error\n    code\n    success\n    data {\n      firstName\n      lastName\n      preferredName\n      dob\n      gender\n      primaryEmail\n      emailVerified\n      phoneNumber\n      mobileVerified\n      profilePath\n      password\n      Nationality\n      countryId\n      idTypeId\n      idNumber\n      recoveryEmail\n      twofaEnabled\n      emailOtpVerified\n      mobileOtpVerified\n      addressTypeId\n      typeOfAddress\n      streetNameAndNumber\n      apartmentUnitNumber\n      city\n      state\n      pincode\n      country\n      isCurrentAddress\n      isPermanentAddress\n      permanentAddressTypeId\n      permanentTypeOfAddress\n      permanentStreetNameAndNumber\n      permanentApartmentUnitNumber\n      permanentCity\n      permanentState\n      permanentPincode\n      permanentCountry\n      planName\n      tenureId\n      tenureYear\n      totalPrice\n      languages\n      height\n      visionDetails\n      weight\n      activityAlert\n      typeOfVisionDetailId\n      typeOfVisionDetailType\n      twoFaMobile\n      twoFaSetpMobileOtpVerified\n      createdBy\n      id\n      permanentId\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="addAddressDetails" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;addAddressDetails&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;addressTypeId&quot;:3,&quot;streetNameAndNumber&quot;:&quot;Ramalayam street&quot;,&quot;apartmentUnitNumber&quot;:&quot;38-20-30&quot;,&quot;city&quot;:&quot;Bangalore&quot;,&quot;state&quot;:&quot;61&quot;,&quot;country&quot;:&quot;2&quot;,&quot;pincode&quot;:&quot;560024&quot;,&quot;isCurrentAddress&quot;:false,&quot;startDate&quot;:&quot;2022-09-01&quot;,&quot;endDate&quot;:&quot;2025-08-31&quot;,&quot;files&quot;:[],&quot;companyName&quot;:&quot;&quot;,&quot;othersValue&quot;:&quot;DDDDDDDDDDD&quot;}},&quot;query&quot;:&quot;mutation addAddressDetails($input: addAddressDetailsinput!) {\n  addAddressDetails(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Throughput Controller" enabled="true">
+          <intProp name="ThroughputController.style">1</intProp>
+          <boolProp name="ThroughputController.perThread">true</boolProp>
+          <intProp name="ThroughputController.maxThroughput">1</intProp>
+          <FloatProperty>
+            <name>ThroughputController.percentThroughput</name>
+            <value>10.0</value>
+            <savedValue>0.0</savedValue>
+          </FloatProperty>
+        </ThroughputController>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAccessEventDropdown" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getAccessEventDropdown&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getAccessEventDropdown {\n  getAccessEventDropdown {\n    message\n    code\n    error\n    success\n    data {\n      id\n      eventType\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AssignSubscriber" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;AssignSubscriber&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;personalMessage&quot;:&quot;dcadsccdfadc&quot;,&quot;trustedHelperName&quot;:&quot;&quot;,&quot;phoneNumber&quot;:&quot;&quot;,&quot;emailId&quot;:&quot;&quot;,&quot;sharedVaults&quot;:[{&quot;vaultId&quot;:1,&quot;vaultName&quot;:&quot;Personal Information&quot;,&quot;isAll&quot;:true,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;groups&quot;:[{&quot;groupId&quot;:1,&quot;groupName&quot;:&quot;My Identity Records&quot;,&quot;isAll&quot;:true,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;modules&quot;:[{&quot;moduleId&quot;:2,&quot;moduleName&quot;:&quot;My Address&quot;,&quot;isAll&quot;:false,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;records&quot;:[{&quot;recordId&quot;:383,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;},{&quot;recordId&quot;:435,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;},{&quot;recordId&quot;:463,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;},{&quot;recordId&quot;:323,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;},{&quot;recordId&quot;:476,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;},{&quot;recordId&quot;:382,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;}],&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;}],&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;}],&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;}],&quot;contactIds&quot;:[688],&quot;accessId&quot;:4,&quot;accessEventId&quot;:1,&quot;startDate&quot;:&quot;2025-11-11&quot;,&quot;endDate&quot;:&quot;2056-12-31&quot;,&quot;eventName&quot;:&quot;&quot;}},&quot;query&quot;:&quot;mutation AssignSubscriber($input: AssignSubscriberInput!) {\n  AssignSubscriber(input: $input) {\n    message\n    success\n    code\n    error\n    subscribers {\n      subscriberId\n      subscriberName\n      contacNumber\n      email\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getNationalities" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getNationalities&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getNationalities {\n  getNationalities {\n    code\n    success\n    message\n    error\n    nationalities {\n      id\n      nationality\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="setMobileNum" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;setMobileNum&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;1bbb8f0c-e274-42a7-8c9a-4dee9435eb2c&quot;,&quot;mobileNum&quot;:&quot;+918088981503&quot;,&quot;type&quot;:true,&quot;isTermsAccepted&quot;:true}},&quot;query&quot;:&quot;mutation setMobileNum($input: SetMobileNumInput!) {\n  setMobileNum(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="twoFaOtp" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;twoFaOtp&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;mobileNum&quot;:&quot;+918088981503&quot;,&quot;isTermsAccepted&quot;:true}},&quot;query&quot;:&quot;mutation twoFaOtp($input: TwoFaMobileInput!) {\n  twoFaOtp(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VerifyMobileOtp" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;VerifyMobileOtp&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;1bbb8f0c-e274-42a7-8c9a-4dee9435eb2c&quot;,&quot;otp&quot;:&quot;470436&quot;,&quot;type&quot;:true}},&quot;query&quot;:&quot;mutation VerifyMobileOtp($input: VerifyMobileOtpInput!) {\n  verifyMobileOtp(input: $input) {\n    success\n    message\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="StoreEncryptedBlob" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;StoreEncryptedBlob&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userEmail&quot;:&quot;chandu@yopmail.com&quot;,&quot;blobs&quot;:[{&quot;blob&quot;:&quot;{\&quot;encryptedPrivateKeysBlob\&quot;:\&quot;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\&quot;,\&quot;encryptedEphemeralKeyBundleWithPass\&quot;:\&quot;KcuID8YY/evMwcY5htIxxMbcChCEN2Ms6WkgjNdv1C0oKtNUo7DaddnbrUjQVM08qNAXR94qJtlWIFZuLhhmYA==\&quot;,\&quot;ivEphemeral\&quot;:\&quot;aNh52/SoAfIrGkMs4FeO3A==\&quot;,\&quot;salt\&quot;:\&quot;45q3QFshoKuWySGTb3d+jg==\&quot;}&quot;,&quot;address&quot;:&quot;&quot;},{&quot;blob&quot;:&quot;{\&quot;encryptedPrivateKeysBlob\&quot;:\&quot;YhIPqotjcplO7QK66tCP9lgn/ugsUAntxUbpN4/v3iVn4B9YAOruwzIcRTtSQF8BF5nxuF7+JQNSiTeDVoUSOXGFTHGabzhpLTQ7CrVtApq08AY1IUVSL//QFGrM658GD6+2yEIxETBiqQJ9aior0ezDVlXrIjKagQeXh88qLWoa3Rqth4Wv+jB/pe5PGg/7KTa4tCvVGT8YNSwoHrMhz8xFnpdxl/3wK1DEcwkIRun+E2Yw84on41zOjCwFKvM5+5LbZCOncZmYs01Dvfa5USzRnZBHzq6MpARTtUKw7S/Ioh/b7fNBPkZx1lgu1SMX7vjXaUsYwx+SRVIu+CTrJye5yVMbrcAFxwHTcwIMcdGDjcVtCQQ/X5VYw8fo9m3frEgY1BvD3mwP5DVB+ybRqheD7e4gSLbocn6HyasvagBmSbwb2X7/M1nvntDynVt52VueGKp7xYHr4JTj3jcF9I9c1FwSC/k6iK8HaA6sqjPjq241hroj0e1RRCrrubD0+EiOb+8qquCS3pNIhRNswwTfJMlj7J3cz36UuDvKr9oewai/Qtsymp+Fkv4hahBZv4ap7EUo4q9J9FP3p5Dnq8OiFvsaH/Uoy/Eu/5VobdW6c2SsaHZuZ831TiS4H9UF+UpEGAHs3cQmy5jf3MK5zwBz13L37cuUJUQFwojzq1leZQGOXXMu4+Ww8jrnmt5qNxzb9cRigaWmUBGf39Cl+1uFYjMSkePYtxrPtLFvmQ1AjcXC3wZkjjsuUsGk3ZyoPVnonhEDNbG1tYxx4L3Sualg/fH8buyoTMvcUvo8rCjKHR5HEcUGXEYc2ZuUkdkUW0e6oMqQel7xPxt6LnNQ8RTIbZIsSHKrLbcMwnIbuJgTEWIleLJWNq3AhqZQwwJMFP0R5TWgFYjLA19UebsFP7hnX/LuRL/PU92t2GJrAwkoVpkV5izNUl7NP6aawxBdXvWhiPD8nHamSo8GljsD7QIbQwHkgAmIbyOCBBD9JGHpZFv+fsxuiJrMHth1UokBXCtLnLXPkYZHoQE42ne+hpp2rSz8q5DGR5/QOqzFG3vp4NiW2MqD0vFoaWD0tahb4NInKexJqVGNI26vlJOuy0CUlZzvVbb5Nncc14BMYF3UgW18rqlxLCq4U+x7FVcZeSnAYyIcTlvgSFxwLmKXbiXobxmZEu2oKM+4tA84y+MMKTDD4t1xLrlmfYhd8PhB94HcM3ZvtitPj02qj0IzC3k/Wes3CO42jKKrH1WXX/Hmzt+C+aPGe+GdFmW9ucK/yDXv0Lj3+yW+aZbvWE5oxQLGWGbZabf0hfABfXyW6Ole0BEeNBp6tyBpIYNU04Zu9uliC0w2kjQoltgO5/SCj/PIpyyaGkXUgTImwwufG8IRoTgXt0aFhJbgEvR+0kEF/SxbD7GpKnh6kzhbblGOx1nuXV8L5nVYF/mW0uf3YBlXLrTZXn3YRHvKj9j8DQmw0Aa07Z7CicOYkB5n5QHD0WsPOPa+3WBLyEt3kLKU1qM+m7s8L/SABC7CY++Vt3OBkQ8YHY0TeWaZ3dGsHphBAsvmvQxz2ju6SZQVTICJAC9YR4SAJu2TzcVQ0FeNjBXTB6evS1okHkEdsWVou0xe1AM8kU1AOhMohSHFY6YrWP1e9p8aRJfqPmDN+zshMme8yTg92fNQhdc1kxet0pelnrodzs35fJLB0/p6E6qwbtCBhqPh7kVsKFQ3SK8xNm1KsJ5ZvhU9NJbeqxpaZpCFyCpSW3VYlMZeG0VFrXcI+JIcC6jwkRm553yZVRotv3S9uSe+AZbpCTIi1bYF5FOrDnFPjOtrKYQv2gxdHk21CBydey3scCKveMQWZfNE3kMRjmI3qclezejvMjvi4kD+d6bvzzmWCahwu98+FrG0Bh6ZUTLob4gwYgXVTmEPtfKs7r1ec24LIvt5WHuSFhO9IzbAifi6nFSL7ZAYe7zrZ0NaRvvM1Be7xYbW73rEM2jwDWj40KhaQ+aNkPOfB8vDhcnF1/vId1UylriiREzilMAUdBYrfwGuDmnfGPRyb3lz+Tu6lQaGUtuAacQGPF9BB3B7nm+WpH3sfgOjrbfJJfqRqJMRriaZ5nqWYO23586hTozf2xWXtssk4jXNVfO5PyxxZFL5qvtqaW++ZUGbw0j+v8wouwauDa39qFghkTPGpiMZvpKcjv/oio8HIf+KdUChK4Orwws1ACx9BUYSQp1WWDGs6ueMnlJZX1cbU+4nh5lIUYDhRcOVKb9ZW0TGgjV/nM0WNaD33f5cyGMD7VTgg1R5seCfwK+xwpuOHN2IpEEqcZqWztccpVyXQoURxEBFwC8ZyHvysBwigiyT3kPOEEJPG8h1KK8x9jV08b8w9m2Xrto=\&quot;,\&quot;encryptedEphemeralKey\&quot;:{\&quot;version\&quot;:\&quot;x25519-xsalsa20-poly1305\&quot;,\&quot;nonce\&quot;:\&quot;hTSU8dQEmgo1PPIf/XV1ys75b67sXsoe\&quot;,\&quot;ephemPublicKey\&quot;:\&quot;4zLhv0hhSnxwg3K3bH5zdY0qhjifgrFpVfrKKQ6OwGk=\&quot;,\&quot;ciphertext\&quot;:\&quot;lIIqGYbvXO12hugBW3Ojppu7yZ6j505KWF/+F4vDg20Iu8klxlMWb8pJKA3MfnPXTiPctcqirOSxyi5oa+g2EgNuRclt/Xn8kiDG5r6h7Rk=\&quot;}}&quot;,&quot;address&quot;:&quot;0x9cc71Dd3654b37AFC4203e62b47f94F40B613Fc5&quot;},{&quot;blob&quot;:&quot;{\&quot;encryptedPrivateKeysBlob\&quot;:\&quot;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\&quot;,\&quot;encryptedEphemeralKey\&quot;:{\&quot;version\&quot;:\&quot;x25519-xsalsa20-poly1305\&quot;,\&quot;nonce\&quot;:\&quot;pYCxG9s7LGJxNtWIzczW1M2z0UOqhQkW\&quot;,\&quot;ephemPublicKey\&quot;:\&quot;/ElsdmeDb+/2JxE9QkoBoxpG4XVxZsuqPdoSPV5a4CU=\&quot;,\&quot;ciphertext\&quot;:\&quot;RzEIv1Zjy/p4YqsL+KPtpDPXg69FORz6ArbFqG0Lv2fU0+ZxIfTSUpurDZ75/adOe4NX9BvVJgcN8/T8UyRTIFwxkotaFHMkA4XgtydjcMc=\&quot;}}&quot;,&quot;address&quot;:&quot;0xB53C3ecD47d2bCCB1703f62742D8023b19F15601&quot;}]}},&quot;query&quot;:&quot;mutation StoreEncryptedBlob($input: StoreEncryptedBlobRequest!) {\n  StoreEncryptedBlob(input: $input) {\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AddIdentityProof" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="operations" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;AddIdentityProof&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;eaca56fc-069a-4f83-bbc7-501ef674cf6e&quot;,&quot;identityProofTypeId&quot;:&quot;1&quot;,&quot;nationality&quot;:&quot;76&quot;,&quot;documentNumber&quot;:&quot;BOMPG9992Q&quot;,&quot;files&quot;:[{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;Screenshot (1) - Copy.png&quot;},{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;Screenshot (1).png&quot;},{&quot;file&quot;:null,&quot;originalFilename&quot;:&quot;Screenshot (2) - Copy.png&quot;}],&quot;otherIdentity&quot;:&quot;&quot;,&quot;expiryDate&quot;:&quot;2026-10-24&quot;,&quot;issueDate&quot;:&quot;&quot;,&quot;neverExpires&quot;:false}},&quot;query&quot;:&quot;mutation AddIdentityProof($input: addIdentityProofInput!) {\n  addIdentityProof(input: $input) {\n    message\n    success\n    code\n    error\n    id\n    recordIdentifier\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">operations</stringProp>
+              </elementProp>
+              <elementProp name="map" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;1&quot;:[&quot;variables.input.files.0.file&quot;],&quot;2&quot;:[&quot;variables.input.files.1.file&quot;],&quot;3&quot;:[&quot;variables.input.files.2.file&quot;]}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">map</stringProp>
+              </elementProp>
+              <elementProp name="1" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> (binary)</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">1</stringProp>
+              </elementProp>
+              <elementProp name="2" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> (binary)</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">2</stringProp>
+              </elementProp>
+              <elementProp name="3" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"> (binary)</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">3</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getB4igoDID" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getB4igoDID&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;},&quot;query&quot;:&quot;query getB4igoDID($userId: String!) {\n  getB4igoDID(userId: $userId) {\n    message\n    error\n    success\n    code\n    DID\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteIdentityProof" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;DeleteIdentityProof&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;,&quot;id&quot;:598}},&quot;query&quot;:&quot;mutation DeleteIdentityProof($input: deleteIdentityProofInput!) {\n  deleteIdentityProof(input: $input) {\n    message\n    code\n    success\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getVisionDetailsTypes" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getVisionDetailsTypes&quot;,&quot;variables&quot;:{},&quot;query&quot;:&quot;query getVisionDetailsTypes {\n  getVisionDetailsTypes {\n    message\n    error\n    code\n    success\n    VisionDetailsTypes {\n      id\n      typeVisionDetails\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetSkillSetsByUserId" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetSkillSetsByUserId&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;},&quot;query&quot;:&quot;query GetSkillSetsByUserId($userId: String!) {\n  getSkillSetsByUserId(userId: $userId) {\n    code\n    success\n    message\n    error\n    userId\n    industrySkillSets {\n      industryId\n      createdAt\n      industry\n      updatedAt\n      categories {\n        categoryId\n        categoryName\n        skills {\n          skillId\n          skillName\n          certificationStatusId\n          certificationStatus\n          certificationName\n          proficiencyId\n          proficiency\n          experienceYears\n          experienceMonths\n          notes\n          files {\n            originalFileName\n            fileURL\n            id\n            skillId\n            createdAt\n            updatedAt\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ProxyQRCode" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;ProxyQRCode&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;,&quot;hours&quot;:0,&quot;minutes&quot;:30,&quot;personalMessage&quot;:&quot;help me.....&quot;,&quot;isPresent&quot;:false,&quot;trustedHelperName&quot;:&quot;Ramcharan&quot;,&quot;phoneNumber&quot;:&quot;+918088981503&quot;,&quot;emailId&quot;:&quot;ramcharan@yopmail.com&quot;,&quot;sharedVaults&quot;:[{&quot;vaultId&quot;:1,&quot;vaultName&quot;:&quot;Personal Information&quot;,&quot;isAll&quot;:false,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;groups&quot;:[{&quot;groupId&quot;:1,&quot;groupName&quot;:&quot;My Identity Records&quot;,&quot;isAll&quot;:true,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;modules&quot;:[{&quot;moduleId&quot;:1,&quot;moduleName&quot;:&quot;My Identity Proof&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;moduleId&quot;:2,&quot;moduleName&quot;:&quot;My Address&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;}],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;groupId&quot;:2,&quot;groupName&quot;:&quot;My Personal Networks&quot;,&quot;isAll&quot;:true,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;modules&quot;:[{&quot;moduleId&quot;:4,&quot;moduleName&quot;:&quot;My Relationships, Dependents &amp; Family&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;moduleId&quot;:7,&quot;moduleName&quot;:&quot;My Contacts&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;}],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;groupId&quot;:3,&quot;groupName&quot;:&quot;My Career and Education&quot;,&quot;isAll&quot;:true,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;modules&quot;:[{&quot;moduleId&quot;:3,&quot;moduleName&quot;:&quot;My Education&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;moduleId&quot;:33,&quot;moduleName&quot;:&quot;My Skillset&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;},{&quot;moduleId&quot;:6,&quot;moduleName&quot;:&quot;My Employment&quot;,&quot;isAll&quot;:true,&quot;moduleStatus&quot;:&quot;&quot;,&quot;isAllowed&quot;:true,&quot;accessTypeId&quot;:0,&quot;accessEventId&quot;:0,&quot;records&quot;:[],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;}],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;}],&quot;startDate&quot;:&quot;2025-09-05T08:40:57.730Z&quot;,&quot;endDate&quot;:&quot;2025-09-05T09:10:57.730Z&quot;}]}},&quot;query&quot;:&quot;query ProxyQRCode($input: GetProxyQRCodeInput!) {\n  proxyQRCode(input: $input) {\n    message\n    success\n    code\n    error\n    qr\n    qrLink\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="readNotification" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;readNotification&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;1656d4c4-1bb8-4bb0-b464-71049a91f163&quot;,&quot;id&quot;:2409},&quot;query&quot;:&quot;mutation readNotification($userId: String!, $id: Int!) {\n  readNotification(userId: $userId, id: $id) {\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="updateApproveStatus" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;updateApproveStatus&quot;,&quot;variables&quot;:{&quot;Id&quot;:2409,&quot;userId&quot;:&quot;1656d4c4-1bb8-4bb0-b464-71049a91f163&quot;,&quot;Approvestatus&quot;:1},&quot;query&quot;:&quot;mutation updateApproveStatus($Id: Int!, $userId: String!, $Approvestatus: Int!) {\n  updateApproveStatus(Id: $Id, userId: $userId, Approvestatus: $Approvestatus) {\n    code\n    success\n    message\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Reject" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;Reject&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;personaId&quot;:&quot;c6972a0c-a4e4-49af-953a-64f2045a3869&quot;,&quot;modules&quot;:&quot;1,2,7,3,6,4,33&quot;}},&quot;query&quot;:&quot;mutation Reject($input: RemoveModuleAccess!) {\n  rejectSubModuleAccess(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ActionForVoting" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;ActionForVoting&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;subscriberId&quot;:&quot;6a892ce9-113f-479a-a19d-8e5b7e2bea1f&quot;,&quot;userId&quot;:&quot;05d5742b-7938-4492-966c-22f11ef82644&quot;,&quot;votingStatus&quot;:&quot;true&quot;}},&quot;query&quot;:&quot;mutation ActionForVoting($input: ActionForVoting!) {\n  actionForVoting(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetVotingSubscriber" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetVotingSubscriber&quot;,&quot;variables&quot;:{&quot;subscriberId&quot;:&quot;6a892ce9-113f-479a-a19d-8e5b7e2bea1f&quot;},&quot;query&quot;:&quot;query GetVotingSubscriber($subscriberId: String!) {\n  getVotingSubscriber(subscriberId: $subscriberId) {\n    subscriberId\n    userId\n    emailId\n    firstName\n    sharedModules\n    relationship\n    profilePic\n    innitate\n    voting\n    expiringDate\n    modulesStatus\n    deletedAt\n    createdAt\n    userName\n    status {\n      agreed\n      disagreed\n      pending\n      votingPercentage\n      __typename\n    }\n    otherSubscriberData {\n      subscriberId\n      firstName\n      relationship\n      voting\n      profilePic\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getRoleSharedInfo" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getRoleSharedInfo&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;,&quot;proxyId&quot;:&quot;&quot;,&quot;witnessId&quot;:0},&quot;query&quot;:&quot;query getRoleSharedInfo($userId: String!, $proxyId: String, $witnessId: Int) {\n  getRoleSharedInfo(userId: $userId, proxyId: $proxyId, witnessId: $witnessId) {\n    message\n    error\n    code\n    success\n    pendingCount\n    roles {\n      name\n      count\n      individuals {\n        name\n        phone\n        email\n        status\n        stringId\n        userID\n        intId\n        sharedVaults\n        assigneeName\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getSubscriptionInvoice" enabled="false">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;getSubscriptionInvoice&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;,&quot;subscriptionId&quot;:1686}},&quot;query&quot;:&quot;query getSubscriptionInvoice($input: SubscriptionInvoiceRequest!) {\n  getSubscriptionInvoice(input: $input) {\n    message\n    error\n    success\n    code\n    invoiceDate\n    invoiceNumber\n    subscriptionPlanName\n    subscriptionPlanType\n    subscriptionStartDate\n    subscriptionExpiryDate\n    autoRenew\n    subscriptionFee\n    tax\n    discount\n    totalAmount\n    paymentMethod\n    Name\n    email\n    Address\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAccessTypesAndEvents" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;GetAccessTypesAndEvents&quot;,&quot;variables&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;},&quot;query&quot;:&quot;query GetAccessTypesAndEvents($userId: String!) {\n  getAccessTypesAndEvents(input: {userId: $userId}) {\n    code\n    success\n    message\n    error\n    accessTypesAndEvents {\n      id\n      accessTypeId\n      accessEventId\n      name\n      __typename\n    }\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RevokeSubscriber" enabled="true">
+          <stringProp name="HTTPSampler.domain">${Servername}</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">query</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:&quot;RevokeSubscriber&quot;,&quot;variables&quot;:{&quot;input&quot;:{&quot;userId&quot;:&quot;14f6bf8e-7e17-469d-80ab-d6e3aa1db3e0&quot;,&quot;subscriberId&quot;:&quot;c6972a0c-a4e4-49af-953a-64f2045a3869&quot;,&quot;hardRevoke&quot;:false,&quot;softRevoke&quot;:true,&quot;completeHardRevoke&quot;:false,&quot;completeSoftRevoke&quot;:false,&quot;vaultId&quot;:1,&quot;moduleId&quot;:1,&quot;groupId&quot;:1,&quot;recordId&quot;:0,&quot;personalMessage&quot;:&quot;Hi Gohitha Maddela123, have made a change to your Subscriber access and your access rights to all future updates have been suspended.&quot;,&quot;notifySubscriber&quot;:true}},&quot;query&quot;:&quot;mutation RevokeSubscriber($input: RevokeSubscriberInput!) {\n  revokeSubscriber(input: $input) {\n    message\n    success\n    code\n    error\n    __typename\n  }\n}&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+        <stringProp name="delimiter">,</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="filename">C:/Performancetest/apache-jmeter-5.6.3/bin/B4igo/Sheet.csv</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="variableNames">Servername</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+        <stringProp name="filename">C:/Performancetest/apache-jmeter-5.6.3/bin/B4igo/userdata.csv</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="variableNames">username,privateKey,PublicKey,EthereumAddress</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">C:\Performancetest\apache-jmeter-5.6.3\bin\B4igo\PersonalVault\Personalvault.jtl</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Authorization</stringProp>
+            <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IiIsInJvbGUiOiIiLCJ1c2VySWQiOiJlYWNhNTZmYy0wNjlhLTRmODMtYmJjNy01MDFlZjY3NGNmNmUiLCJpc01lZGljYWwiOmZhbHNlLCJleHAiOjE3NjQwNDQ3ODMsIm5iZiI6MTc2Mzk1ODM4MywiaWF0IjoxNzYzOTU4MzgzfQ.wQ31MmpY7j8-17PecRM3DNoFPKoAzYu2pdkrfpWDAP8</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
