@@ -59,7 +59,8 @@ jobs:
             echo "vaults=$VAULTS" >> $GITHUB_OUTPUT
           fi
       - name: Show detected vaults
-        run: echo "Vaults selected: ${{ steps.find.outputs.vaults }}"
+        run: |
+          echo "Vaults selected: ${{ steps.find.outputs.vaults }}"
 
   run-vault-tests:
     needs: detect-vaults
@@ -94,7 +95,8 @@ jobs:
           echo "found=$LATEST" >> $GITHUB_OUTPUT
       - name: Show chosen JMX
         if: ${{ steps.find_jmx.outputs.found != '' }}
-        run: echo "Running ${{ steps.find_jmx.outputs.found }}"
+        run: |
+          echo "Running ${{ steps.find_jmx.outputs.found }}"
       - name: Run JMeter
         if: ${{ steps.find_jmx.outputs.found != '' }}
         run: |
@@ -108,7 +110,7 @@ jobs:
           cp -r data "$RUN_DIR/data"
           cp "$JMX" "$RUN_DIR/testplan.jmx"
           echo "Normalizing Windows paths..."
-          sed -i 's#\\\\#/#g' "$RUN_DIR/testplan.jmx"
+          sed -i 's#\\#/#g' "$RUN_DIR/testplan.jmx"
           sed -i 's#[A-Za-z]:/##g' "$RUN_DIR/testplan.jmx"
           echo "Fixing CSV filename references..."
           for f in data/*; do
