@@ -1,0 +1,146 @@
+name: Run JMeter Vault Tests
+
+on:
+  push:
+    branches: [ main, PersonalVault ]
+    paths:
+      - "Vaults/**.jmx"
+      - "data/**"
+  pull_request:
+    paths:
+      - "Vaults/**.jmx"
+      - "data/**"
+  workflow_dispatch:
+
+jobs:
+
+  detect-vault:
+    runs-on: ubuntu-latest
+    outputs:
+      vault: ${{ steps.extract.outputs.vault }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect which vault changed
+        id: extract
+        run: |
+          # Find changed .jmx files
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^Vaults/" | grep ".jmx" || true)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No vault changes detected."
+            echo "vault=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Extract vault folder name
+          VAULT=$(echo "$CHANGED" | head -n 1 | cut -d'/' -f2)
+          echo "Detected vault: $VAULT"
+          echo "vault=$VAULT" >> "$GITHUB_OUTPUT"
+
+
+  run-vault-tests:
+    needs: detect-vault
+    runs-on: ubuntu-latest
+    if: ${{ needs.detect-vault.outputs.vault != '' }}
+
+    strategy:
+      matrix:
+        vault: [ "${{ needs.detect-vault.outputs.vault }}" ]
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget tar xmlstarlet
+
+      - name: Download JMeter
+        run: |
+          JMETER_VER="5.6.3"
+          wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
+          tar -xzf apache-jmeter-${JMETER_VER}.tgz
+
+      - name: Create results folder
+        run: mkdir -p results
+
+      - name: Find latest JMX in the vault
+        id: find_jmx
+        run: |
+          VAULT_DIR="Vaults/${{ matrix.vault }}"
+          LATEST=$(ls -1t "${VAULT_DIR}"/*.jmx 2>/dev/null | head -n 1 || true)
+          echo "found=$LATEST" >> "$GITHUB_OUTPUT"
+
+      - name: Show chosen JMX
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: echo "Running JMX: ${{ steps.find_jmx.outputs.found }}"
+
+      - name: Run JMeter
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        run: |
+          set -e
+          JMETER_HOME="apache-jmeter-5.6.3"
+          JMX="${{ steps.find_jmx.outputs.found }}"
+          RUN_ID="${{ matrix.vault }}-$(date +%Y%m%d-%H%M%S)"
+          RUN_DIR="results/${RUN_ID}"
+
+          mkdir -p "${RUN_DIR}"
+          cp -r data "${RUN_DIR}/data"
+          cp "${JMX}" "${RUN_DIR}/testplan.jmx"
+
+          sed -i 's#\\\\#/#g' "${RUN_DIR}/testplan.jmx"
+          sed -i 's#[A-Za-z]:/##g' "${RUN_DIR}/testplan.jmx"
+
+          for f in data/*; do
+            name=$(basename "$f")
+            xmlstarlet ed -L \
+              -u "//stringProp[@name='filename' and contains(text(), '${name}')]" \
+              -v "data/${name}" \
+              "${RUN_DIR}/testplan.jmx" || true
+          done
+
+          ERR=0
+          grep -oP '(?<=<stringProp name=\"filename\">)[^<]+' "${RUN_DIR}/testplan.jmx" | while read file; do
+            if [ ! -f "${RUN_DIR}/${file}" ]; then
+              echo "Missing CSV referenced in JMX: ${file}"
+              ERR=1
+            fi
+          done
+
+          if [ "$ERR" -eq 1 ]; then
+            echo "Stopping because CSV references are incorrect."
+            exit 1
+          fi
+
+          "${JMETER_HOME}/bin/jmeter" -n \
+            -t "${RUN_DIR}/testplan.jmx" \
+            -l "${RUN_DIR}/results.jtl" \
+            -j "${RUN_DIR}/jmeter.log" \
+            -e -o "${RUN_DIR}/html"
+
+      - name: Upload report
+        if: ${{ steps.find_jmx.outputs.found != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: "jmeter-report-${{ matrix.vault }}"
+          path: "results/${{ matrix.vault }}-*"
+
+
+  no-vault-detected:
+    needs: detect-vault
+    runs-on: ubuntu-latest
+    if: ${{ needs.detect-vault.outputs.vault == '' }}
+    steps:
+      - run: echo "No vault JMX changes detected. Skipping workflow."
