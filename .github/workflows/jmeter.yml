@@ -18,21 +18,55 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       vault: ${{ steps.extract.outputs.vault }}
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # ensures HEAD~1 exists
 
       - name: Detect changed vault
         id: extract
         run: |
-          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^Vaults/" | grep ".jmx" || true)
+          set -e
+
+          echo "Event: ${{ github.event_name }}"
+
+          # Determine comparison range
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${GITHUB_BASE_REF}"
+            echo "PR event. Comparing against origin/$BASE"
+            git fetch origin "$BASE" --depth=1
+            RANGE="origin/$BASE...HEAD"
+          else
+            if git rev-parse HEAD~1 >/dev/null 2>&1; then
+              echo "Push event. Using HEAD~1 HEAD"
+              RANGE="HEAD~1 HEAD"
+            else
+              echo "No HEAD~1 available, using HEAD only"
+              RANGE="HEAD"
+            fi
+          fi
+
+          echo "Using diff range: $RANGE"
+
+          # Find changed JMX files
+          CHANGED=$(git diff --name-only $RANGE -- "Vaults/" | grep ".jmx" || true)
 
           if [ -z "$CHANGED" ]; then
+            echo "No JMX changes detected."
             echo "vault=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          VAULT=$(echo "$CHANGED" | head -n1 | cut -d'/' -f2)
+          echo "Changed JMX files:"
+          echo "$CHANGED"
+
+          # Extract the vault directory name
+          VAULT=$(echo "$CHANGED" | head -n 1 | cut -d'/' -f2)
+          echo "Detected vault: $VAULT"
           echo "vault=$VAULT" >> "$GITHUB_OUTPUT"
+
 
   run-vault-tests:
     needs: detect-vault
@@ -70,6 +104,7 @@ jobs:
         with:
           name: "jmeter-${{ needs.detect-vault.outputs.vault }}"
           path: "results/${{ needs.detect-vault.outputs.vault }}-*"
+
 
   no-vault-detected:
     needs: detect-vault
