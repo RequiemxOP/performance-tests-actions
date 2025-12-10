@@ -1441,7 +1441,7 @@
             <stringProp name="Header.value">application/json</stringProp>
           </elementProp>
           <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">authorization</stringProp>
+            <stringProp name="Header.name">Authorization</stringProp>
             <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IiIsInJvbGUiOiIiLCJ1c2VySWQiOiJjZWMyODAxMy1mZmJmLTQwMjItODc0Zi03YzYwNjZkOGI5ZjYiLCJpc01lZGljYWwiOmZhbHNlLCJleHAiOjE3NjU0MzQ4MzEsIm5iZiI6MTc2NTM0ODQzMSwiaWF0IjoxNzY1MzQ4NDMxfQ.9Rlz_aMJ6vsWVF9thGQQvTJdFQG9nUSJPI3k1xLbJOo</stringProp>
           </elementProp>
         </collectionProp>
