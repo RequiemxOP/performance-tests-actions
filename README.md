@@ -8,7 +8,7 @@ The goal is to provide fast, efficient, and intelligent API testing in CI withou
 ---
 
 ## 📁 Folder Structure
-
+```
 Vaults/
 └── <VaultName>/
 ├── testplan.jmx
@@ -20,7 +20,7 @@ Vaults/
 │ └── jmeter.yml # Main GitHub Actions workflow
 └── scripts/
 └── run_jmeter.sh # Script that runs JMeter in CI
-
+```
 yaml
 Copy code
 
@@ -31,56 +31,7 @@ When a `.jmx` or associated data file changes, the workflow runs only for that s
 
 Each microservice test suite lives under `Vaults/<VaultName>/`.
 
----
 
-# 🔄 Complete Pipeline Flow
-
-The diagram below shows how the GitHub Actions workflow operates from start to finish:
-
-mathematica
-Copy code
-              ┌────────────────────────┐
-              │ Developer Pushes Code  │
-              │ or Opens Pull Request  │
-              └──────────────┬─────────┘
-                             │
-                             ▼
-                ┌────────────────────────┐
-                │ Detect Changed Vault   │
-                │ - Check git diff       │
-                │ - Extract vault name   │
-                └──────────────┬─────────┘
-                             │
-           If no JMX changed │           If vault found
-                             │
-              ┌──────────────▼──────────────┐
-              │  Skip Workflow (no changes) │
-              └─────────────────────────────┘
-                             │
-                             ▼
-                ┌────────────────────────┐
-                │ Set Up Test Environment│
-                │ - Java 17              │
-                │ - JMeter 5.6.3         │
-                │ - xmlstarlet           │
-                └──────────────┬─────────┘
-                             │
-                             ▼
-                ┌────────────────────────┐
-                │ run_jmeter.sh Script   │
-                │ - Normalize JMX paths  │
-                │ - Validate CSV files   │
-                │ - Run non-GUI JMeter   │
-                │ - Generate HTML report │
-                └──────────────┬─────────┘
-                             │
-                             ▼
-                ┌────────────────────────┐
-                │ Upload HTML Report     │
-                │ as GitHub Artifact     │
-                └────────────────────────┘
-
----
 
 ## 🚀 How the GitHub Actions Workflow Works
 
@@ -233,5 +184,6 @@ The workflow will automatically detect and test it.
 📄 License
 Private internal repository.
 Used solely for automated API performance testing and CI validation.
+
 
 
