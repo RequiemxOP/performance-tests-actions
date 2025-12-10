@@ -27,6 +27,48 @@ Copy code
 Each microservice (DigitalVault, HealthVault, LegalVault, Subscription, etc.) lives under `Vaults/`.  
 When a `.jmx` or associated data file changes, the workflow runs only for that specific vault.
 
+Okay
+              ┌────────────────────────┐
+              │ Developer Pushes Code  │
+              │ or Opens Pull Request  │
+              └──────────────┬─────────┘
+                             │
+                             ▼
+                ┌────────────────────────┐
+                │ Detect Changed Vault   │
+                │ - Check git diff       │
+                │ - Extract vault name   │
+                └──────────────┬─────────┘
+                             │
+           If no JMX changed │           If vault found
+                             │
+              ┌──────────────▼──────────────┐
+              │  Skip Workflow (no changes) │
+              └─────────────────────────────┘
+                             │
+                             ▼
+                ┌────────────────────────┐
+                │ Set Up Test Environment│
+                │ - Java 17              │
+                │ - JMeter 5.6.3         │
+                │ - xmlstarlet           │
+                └──────────────┬─────────┘
+                             │
+                             ▼
+                ┌────────────────────────┐
+                │ run_jmeter.sh Script   │
+                │ - Normalize JMX paths  │
+                │ - Validate CSV files   │
+                │ - Run non-GUI JMeter   │
+                │ - Generate HTML report │
+                └──────────────┬─────────┘
+                             │
+                             ▼
+                ┌────────────────────────┐
+                │ Upload HTML Report     │
+                │ as GitHub Artifact     │
+                └────────────────────────┘
+
 
 Each microservice test suite lives under `Vaults/<VaultName>/`.
 
