@@ -1442,7 +1442,7 @@
           </elementProp>
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">Authorization</stringProp>
-            <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IiIsInJvbGUiOiIiLCJ1c2VySWQiOiI2M2Q5ZWYwNy1iN2I1LTRlMWYtODg3OC1kZjQzMDQ0ZjVlYTUiLCJpc01lZGljYWwiOmZhbHNlLCJleHAiOjE3NjUyNTcxMzUsIm5iZiI6MTc2NTE3MDczNSwiaWF0IjoxNzY1MTcwNzM1fQ.HCnAhtvBKx9Fj3Vn-hjuis0mJNMg0Mc7nBHhzKSOS_o</stringProp>
+            <stringProp name="Header.value">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IiIsInJvbGUiOiIiLCJ1c2VySWQiOiJkNzJhMzI4MC00YjZkLTRkODctOTlmNi0wZTAzODJhOGE4YjAiLCJpc01lZGljYWwiOmZhbHNlLCJleHAiOjE3NjU1MzQ5NTYsIm5iZiI6MTc2NTQ0ODU1NiwiaWF0IjoxNzY1NDQ4NTU2fQ.iaeLxGnT4PqEKN-rPZe_O8dtt3maT39cSq-mZtbW9XE</stringProp>
           </elementProp>
         </collectionProp>
       </HeaderManager>
