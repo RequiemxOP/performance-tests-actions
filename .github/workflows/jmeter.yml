@@ -2,7 +2,7 @@ name: Run JMeter Vault Tests
 
 on:
   push:
-    branches: [ main, PersonalVault ]
+    branches: [ Grapes ]
     paths:
       - "Vaults/**.jmx"
       - "data/**"
