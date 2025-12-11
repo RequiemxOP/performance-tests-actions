@@ -3,6 +3,17 @@ name: Run JMeter Vault Tests
 on:
   workflow_dispatch:
     inputs:
+      vault:
+        description: "Select the vault to run"
+        required: true
+        type: choice
+        options:
+          - DigitalVault
+          - HealthVault
+          - LegalVault
+          - PersonalVault
+          - Subscription
+          - EOLVault
       token:
         description: "Enter Bearer Token for this run"
         required: true
@@ -10,43 +21,12 @@ on:
 
 jobs:
 
-  detect-vault:
+  run-vault-tests:
     runs-on: ubuntu-latest
-    outputs:
-      vault: ${{ steps.extract.outputs.vault }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Detect changed vault
-        id: extract
-        run: |
-          echo "Manual run – detecting latest modified vault directory"
-
-          # Find latest modified JMX file
-          CHANGED=$(git ls-files -m "Vaults/**/*.jmx" | head -n 1 || true)
-
-          if [ -z "$CHANGED" ]; then
-            echo "vault=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          VAULT=$(echo "$CHANGED" | cut -d'/' -f2)
-
-          echo "Detected vault: $VAULT"
-          echo "vault=$VAULT" >> "$GITHUB_OUTPUT"
-
-
-  run-vault-tests:
-    needs: detect-vault
-    if: ${{ needs.detect-vault.outputs.vault != '' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Mask token (security)
         run: echo "::add-mask::${{ github.event.inputs.token }}"
@@ -68,23 +48,15 @@ jobs:
           wget -q https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VER}.tgz
           tar -xzf apache-jmeter-${JMETER_VER}.tgz
 
-      - name: Run JMeter for vault
+      - name: Run JMeter for selected vault
         run: |
           bash .github/scripts/run_jmeter.sh \
-            "${{ github.workspace }}/Vaults/${{ needs.detect-vault.outputs.vault }}"/*.jmx \
-            "${{ needs.detect-vault.outputs.vault }}" \
+            "${{ github.workspace }}/Vaults/${{ github.event.inputs.vault }}"/*.jmx \
+            "${{ github.event.inputs.vault }}" \
             "${{ github.event.inputs.token }}"
 
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:
-          name: "jmeter-${{ needs.detect-vault.outputs.vault }}"
-          path: "results/${{ needs.detect-vault.outputs.vault }}-*"
-
-
-  no-vault-detected:
-    needs: detect-vault
-    if: ${{ needs.detect-vault.outputs.vault == '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "No vault changes detected."
+          name: "jmeter-${{ github.event.inputs.vault }}"
+          path: "results/${{ github.event.inputs.vault }}-*"
