@@ -1,16 +1,12 @@
 name: Run JMeter Vault Tests
 
 on:
-  push:
-    branches: [ Grapes ]
-    paths:
-      - "Vaults/**.jmx"
-      - "data/**"
-  pull_request:
-    paths:
-      - "Vaults/**.jmx"
-      - "data/**"
   workflow_dispatch:
+    inputs:
+      token:
+        description: "Enter Bearer Token for this run"
+        required: true
+        type: string
 
 jobs:
 
@@ -23,47 +19,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2   # ensures HEAD~1 exists
+          fetch-depth: 2
 
       - name: Detect changed vault
         id: extract
         run: |
-          set -e
+          echo "Manual run – detecting latest modified vault directory"
 
-          echo "Event: ${{ github.event_name }}"
-
-          # Determine comparison range
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE="${GITHUB_BASE_REF}"
-            echo "PR event. Comparing against origin/$BASE"
-            git fetch origin "$BASE" --depth=1
-            RANGE="origin/$BASE...HEAD"
-          else
-            if git rev-parse HEAD~1 >/dev/null 2>&1; then
-              echo "Push event. Using HEAD~1 HEAD"
-              RANGE="HEAD~1 HEAD"
-            else
-              echo "No HEAD~1 available, using HEAD only"
-              RANGE="HEAD"
-            fi
-          fi
-
-          echo "Using diff range: $RANGE"
-
-          # Find changed JMX files
-          CHANGED=$(git diff --name-only $RANGE -- "Vaults/" | grep ".jmx" || true)
+          # Find latest modified JMX file
+          CHANGED=$(git ls-files -m "Vaults/**/*.jmx" | head -n 1 || true)
 
           if [ -z "$CHANGED" ]; then
-            echo "No JMX changes detected."
             echo "vault=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          echo "Changed JMX files:"
-          echo "$CHANGED"
+          VAULT=$(echo "$CHANGED" | cut -d'/' -f2)
 
-          # Extract the vault directory name
-          VAULT=$(echo "$CHANGED" | head -n 1 | cut -d'/' -f2)
           echo "Detected vault: $VAULT"
           echo "vault=$VAULT" >> "$GITHUB_OUTPUT"
 
@@ -75,6 +47,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Mask token (security)
+        run: echo "::add-mask::${{ github.event.inputs.token }}"
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -97,7 +72,8 @@ jobs:
         run: |
           bash .github/scripts/run_jmeter.sh \
             "${{ github.workspace }}/Vaults/${{ needs.detect-vault.outputs.vault }}"/*.jmx \
-            "${{ needs.detect-vault.outputs.vault }}"
+            "${{ needs.detect-vault.outputs.vault }}" \
+            "${{ github.event.inputs.token }}"
 
       - name: Upload report
         uses: actions/upload-artifact@v4
