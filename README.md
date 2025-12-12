@@ -5,6 +5,47 @@ The system detects which microservice vault was modified and runs **only that va
 
 The goal is to provide fast, efficient, and intelligent API testing in CI without running unnecessary workloads.
 
+
+## Main Branch — Automated JMX-Based Testing
+
+The main branch is fully automated.
+Whenever a JMX file or test data changes, the JMeter pipeline runs on its own.
+
+No manual input
+
+No token prompt
+
+Runs automatically on push
+
+Best for CI/CD integration
+
+Ideal for validating changes during development
+
+This branch is the “automation mode” branch.
+
+## Grapes Branch — Manual Token + Manual Vault Selection
+
+The Grapes branch is built for manual execution.
+This mode is for situations where you want full control over:
+
+Which vault to test
+
+What token to use
+
+When the workflow should run
+
+When you start the workflow:
+
+GitHub asks for the Bearer token
+
+You choose the vault from a dropdown
+
+JMeter runs only that vault
+
+No auto-detection logic
+
+This branch is the “manual control mode” branch.
+
 ---
 
 ## 📁 Folder Structure
@@ -225,6 +266,7 @@ The workflow will automatically detect and test it.
 📄 License
 Private internal repository.
 Used solely for automated API performance testing and CI validation.
+
 
 
 
